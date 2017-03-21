@@ -8,31 +8,32 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class GameServer extends ApplicationAdapter
 {
-	// Startup class
-	SpriteBatch batch;
-	Texture img;
+    // Startup class
+    SpriteBatch batch;
+    Texture img;
 
-	@Override
-	public void create()
-	{
-		batch = new SpriteBatch();
-		img = new Texture("core/assets/badlogic.jpg");
-	}
+    @Override
+    public void create()
+    {
+        batch = new SpriteBatch();
+        
+        img = new Texture("../core/assets/badlogic.jpg");
+    }
 
-	@Override
-	public void render()
-	{
-		Gdx.gl.glClearColor(1, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
+    @Override
+    public void render()
+    {
+        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        batch.begin();
+        batch.draw(img, 0, 0);
+        batch.end();
+    }
 
-	@Override
-	public void dispose()
-	{
-		batch.dispose();
-		img.dispose();
-	}
+    @Override
+    public void dispose()
+    {
+        batch.dispose();
+        img.dispose();
+    }
 }
