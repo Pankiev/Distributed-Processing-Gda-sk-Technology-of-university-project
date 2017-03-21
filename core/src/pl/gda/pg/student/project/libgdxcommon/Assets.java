@@ -15,79 +15,79 @@ import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 
 public class Assets
 {
-	private String assetsPath = "assets";
-	private Map<String, Class<?>> classTypes = new HashMap<String, Class<?>>();
-	private AssetManager assets = new AssetManager();
-	private BitmapFont font = new BitmapFont();
+    private String assetsPath = "assets";
+    private Map<String, Class<?>> classTypes = new HashMap<String, Class<?>>();
+    private AssetManager assets = new AssetManager();
+    private BitmapFont font = new BitmapFont();
 
-	public Assets()
-	{
-		addClassTypes();
-		loadAll();
-	}
+    public Assets()
+    {
+        addClassTypes();
+        loadAll();
+    }
 
-	private void addClassTypes()
-	{
-		classTypes.put("png", Texture.class);
-		classTypes.put("jpg", Texture.class);
-		classTypes.put("bmp", Texture.class);
-		classTypes.put("gif", Texture.class);
-		classTypes.put("mp3", Music.class);
-		classTypes.put("ogg", Sound.class);
-	}
+    private void addClassTypes()
+    {
+        classTypes.put("png", Texture.class);
+        classTypes.put("jpg", Texture.class);
+        classTypes.put("bmp", Texture.class);
+        classTypes.put("gif", Texture.class);
+        classTypes.put("mp3", Music.class);
+        classTypes.put("ogg", Sound.class);
+    }
 
-	public void loadAll()
-	{
-		FileHandle[] files = Gdx.files.internal(assetsPath).list();
-		for (FileHandle file : files)
-			assets.load(file.path(), getClassFromPath(file.path()));
+    public void loadAll()
+    {
+        FileHandle[] files = Gdx.files.internal(assetsPath).list();
+        for (FileHandle file : files)
+            assets.load(file.path(), getClassFromPath(file.path()));
 
-		assets.finishLoading();
-	}
+        assets.finishLoading();
+    }
 
-	private Class<?> getClassFromPath(String path)
-	{
-		String extension = getExtension(path);
-		if (classTypes.containsKey(extension))
-			return classTypes.get(extension);
-		else
-			throw new UnknownExtensionException(extension);
-	}
+    private Class<?> getClassFromPath(String path)
+    {
+        String extension = getExtension(path);
+        if (classTypes.containsKey(extension))
+            return classTypes.get(extension);
+        else
+            throw new UnknownExtensionException(extension);
+    }
 
-	private String getExtension(String path)
-	{
-		int extensionStartIndex = path.lastIndexOf('.') + 1;
-		return path.substring(extensionStartIndex);
-	}
+    private String getExtension(String path)
+    {
+        int extensionStartIndex = path.lastIndexOf('.') + 1;
+        return path.substring(extensionStartIndex);
+    }
 
-	public <T> T get(String fileName)
-	{
-		T asset = assets.get(assetsPath + '/' + fileName);
-		return asset;
-	}
+    public <T> T get(String fileName)
+    {
+        T asset = assets.get(assetsPath + '/' + fileName);
+        return asset;
+    }
 
-	public <T> T get(String fileName, Class<T> classType)
-	{
-		return assets.get(assetsPath + '/' + fileName, classType);
-	}
+    public <T> T get(String fileName, Class<T> classType)
+    {
+        return assets.get(assetsPath + '/' + fileName, classType);
+    }
 
-	public void dispose()
-	{
-		assets.dispose();
-		font.dispose();
-	}
+    public void dispose()
+    {
+        assets.dispose();
+        font.dispose();
+    }
 
-	public BitmapFont getFont()
-	{
-		return font;
-	}
+    public BitmapFont getFont()
+    {
+        return font;
+    }
 
-	private class UnknownExtensionException extends GameException
-	{
-		public UnknownExtensionException(String extension)
-		{
-			super("Extension " + extension + "is not recognized");
-		}
-	}
+    private class UnknownExtensionException extends GameException
+    {
+        public UnknownExtensionException(String extension)
+        {
+            super("Extension " + extension + "is not recognized");
+        }
+    }
 
 }

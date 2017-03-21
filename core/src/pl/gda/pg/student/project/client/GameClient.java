@@ -4,20 +4,20 @@ import com.badlogic.gdx.ApplicationAdapter;
 
 public class GameClient extends ApplicationAdapter
 {
-	// TODO
+    // TODO
 
-	@Override
-	public void create()
-	{
-	}
+    @Override
+    public void create()
+    {
+    }
 
-	@Override
-	public void render()
-	{
-	}
+    @Override
+    public void render()
+    {
+    }
 
-	@Override
-	public void dispose()
-	{
-	}
+    @Override
+    public void dispose()
+    {
+    }
 }
