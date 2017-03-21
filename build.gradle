@@ -50,6 +50,8 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+        compile group: 'com.esotericsoftware', name: 'kryonet', version: '2.22.0-RC1'
+        compile group: 'org.reflections', name: 'reflections', version: '0.9.11'
     }
 }
 

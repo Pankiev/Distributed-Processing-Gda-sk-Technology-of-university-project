@@ -32,5 +32,17 @@
 			<artifactId>reflections-maven</artifactId>
 			<version>0.9.8</version>
 		</dependency>
-	</dependencies>
+      <dependency>
+          <groupId>com.badlogicgames.gdx</groupId>
+          <artifactId>gdx</artifactId>
+          <version>1.9.6</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-platform -->
+      <dependency>
+          <groupId>com.badlogicgames.gdx</groupId>
+          <artifactId>gdx-platform</artifactId>
+          <version>1.9.6</version>
+      </dependency>
+
+  </dependencies>
 </project>
