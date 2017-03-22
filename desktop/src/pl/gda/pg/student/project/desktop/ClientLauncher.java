@@ -2,9 +2,7 @@ package pl.gda.pg.student.project.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-
 import pl.gda.pg.student.project.client.GameClient;
-import pl.gda.pg.student.project.server.GameServer;
 
 public class ClientLauncher
 {

@@ -1,21 +1,19 @@
 package pl.gda.pg.student.project.server;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
+
+import java.io.IOException;
 
 public class GameServer extends ApplicationAdapter
 {
