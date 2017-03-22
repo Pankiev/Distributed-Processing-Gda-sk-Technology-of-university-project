@@ -6,28 +6,25 @@ import pl.gda.pg.student.project.client.objects.Box;
 import pl.gda.pg.student.project.client.objects.Player;
 import pl.gda.pg.student.project.libgdxcommon.State;
 
-/**
- * Created by Bartek on 22.03.2017.
- * Gry Karciane
- */
-public class GameState extends State {
+public class GameState extends State
+{
 
     Player player = new Player(this);
     InputHandler inputHandler = new InputHandler(player);
     Box box = new Box(this);
 
-
     @Override
-    public void render(SpriteBatch batch) {
+    public void render(SpriteBatch batch)
+    {
         box.render(batch);
         player.render(batch);
         Gdx.input.setInputProcessor(inputHandler);
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
         inputHandler.process();
     }
-
 
 }
