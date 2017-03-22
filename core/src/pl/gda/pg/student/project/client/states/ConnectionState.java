@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
@@ -20,6 +21,7 @@ public class ConnectionState extends State implements TextInputListener
     
     public ConnectionState(Client client)
     {
+        font.setColor(new Color(1, 0, 0, 0.8f));
         askForIp();
     }
 
@@ -36,22 +38,27 @@ public class ConnectionState extends State implements TextInputListener
 
     @Override
     public void update()
-    {   
+    {
+        if(client.isConnected())
+            System.out.println("Connected client side, id: " + client.getID());
     }
 
     @Override
     public void input(String ip)
     {
-        tryConnecting(ip);
+        Thread connectThread = new Thread(() -> tryConnecting(ip));
+        connectThread.start();
     }
 
     private void tryConnecting(String ip)
     {
         try
         {
-            client.connect(1000, ip, ConnectionSettings.CONNECTION_PORT);
+       
+            client.connect(2000, ip, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
         } catch (IOException e)
         {
+            System.out.print(e.getMessage());
             messageForUser = "Connection failed, try again";
             askForIp();
         }        

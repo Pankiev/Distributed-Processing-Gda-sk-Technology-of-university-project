@@ -9,9 +9,9 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
-import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
+import pl.gda.pg.student.project.server.states.GameState;
 
 import java.io.IOException;
 
@@ -21,6 +21,7 @@ public class GameServer extends ApplicationAdapter
     public static Assets assets;
     private StateManager states;
     private Server server;
+    private GameState gameState;
 
     @Override
     public void create()
@@ -29,22 +30,24 @@ public class GameServer extends ApplicationAdapter
         assets = new Assets();
         batch = new SpriteBatch();
         states = new StateManager();
-
+        gameState = new GameState();
+        states.push(gameState);
     }
 
     private Server initializeServer()
     {
         Server server = new Server();
-        tryBindingServer(server, ConnectionSettings.CONNECTION_PORT);
+        tryBindingServer(server, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
         server.addListener(new ServerListener());
+        server.start();
         return server;
     }
 
-    private void tryBindingServer(Server server, int tcpPort)
+    private void tryBindingServer(Server server, int tcpPort, int udpPort)
     {
         try
         {
-            server.bind(tcpPort);
+            server.bind(tcpPort, udpPort);
         } catch (IOException e)
         {
             throw new CannotBindServerException(e.getMessage());
