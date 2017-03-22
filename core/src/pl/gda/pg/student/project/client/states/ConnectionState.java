@@ -6,24 +6,20 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 
+import pl.gda.pg.student.project.client.GameClient;
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
-import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 
 public class ConnectionState extends State implements TextInputListener
 {
-    private String messageForUser = "";
+    private BitmapFont font = GameClient.assets.getFont();
+    private String messageForUser = "Input adress ip";
     private Client client = new Client();
     
-    public ConnectionState()
+    public ConnectionState(Client client)
     {
-        Kryo kryo = client.getKryo();
-        kryo = PacketsRegisterer.registerAllAnnotated(kryo);
-        kryo = PacketsRegisterer.registerDefaults(kryo);
         askForIp();
     }
 
@@ -35,15 +31,12 @@ public class ConnectionState extends State implements TextInputListener
     @Override
     public void render(SpriteBatch batch)
     {
-        // TODO Auto-generated method stub
-        
+        font.draw(batch, messageForUser, 0, 0);
     }
 
     @Override
     public void update()
-    {
-        // TODO Auto-generated method stub
-        
+    {   
     }
 
     @Override
@@ -59,10 +52,9 @@ public class ConnectionState extends State implements TextInputListener
             client.connect(1000, ip, ConnectionSettings.CONNECTION_PORT);
         } catch (IOException e)
         {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        
+            messageForUser = "Connection failed, try again";
+            askForIp();
+        }        
     }
 
     @Override
