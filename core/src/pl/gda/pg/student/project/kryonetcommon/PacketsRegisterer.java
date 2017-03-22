@@ -13,9 +13,10 @@ public class PacketsRegisterer
     private final static Class<? extends Annotation> defaultAnnotationType = Registerable.class;
     private final static Class<? extends Annotation> defaultAnnotationBase = RegisterableBase.class;
 
-    public static void registerAllAnnotated(Kryo destination)
+    public static Kryo registerAllAnnotated(Kryo destination)
     {
         destination = registerAllAnnotated(destination, defaultAnnotationType);
+        return destination;
     }
 
     public static Kryo registerAllAnnotated(Kryo destination, Class<? extends Annotation> annotationType)
