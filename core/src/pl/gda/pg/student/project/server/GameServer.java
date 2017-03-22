@@ -16,7 +16,6 @@ import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
-import pl.gda.pg.student.project.server.states.ObserveState;
 
 public class GameServer extends ApplicationAdapter
 {
@@ -32,8 +31,7 @@ public class GameServer extends ApplicationAdapter
         assets = new Assets();
         batch = new SpriteBatch();
         states = new StateManager();
-        State observe = new ObserveState();
-        states.push(observe);
+
     }
 
     private Server initializeServer()
