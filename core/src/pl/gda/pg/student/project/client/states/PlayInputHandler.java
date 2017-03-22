@@ -23,7 +23,7 @@ public class PlayInputHandler extends InputProcessorAdapter
         @Override
         public void handle()
         {
-            playerObject.moveUp();
+            playerObject.moveUp(); 
 
         }
 
