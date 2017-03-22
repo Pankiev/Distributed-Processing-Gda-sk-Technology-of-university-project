@@ -84,8 +84,7 @@ public class GameClient extends ApplicationAdapter
         @Override
         public void received(Connection connection, Object object)
         {
-            // TODO Auto-generated method stub
-            super.received(connection, object);
+            System.out.println("Client side: object reveived from server, client id: " + connection.getID() + " " + object);
         }
         
     }
