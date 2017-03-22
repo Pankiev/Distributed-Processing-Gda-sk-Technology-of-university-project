@@ -13,22 +13,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Bartek on 22.03.2017.
- * Gry Karciane
+ * Created by Bartek on 22.03.2017. Gry Karciane
  */
-public class GameState extends State implements GameObjectsContainer {
+public class ServerPlayState extends State implements GameObjectsContainer
+{
 
     private Map<Long, GameObject> objects;
 
-    public GameState(){
+    public ServerPlayState()
+    {
         objects = Collections.synchronizedMap(new HashMap<Long, GameObject>());
         Wall wall;
         long id;
-        for (int i = 0; i <= 20; i++) {
-            for (int j = 0; j <= 16; j++) {
-                if (i % 2 == 1 && j % 2 == 1) {
+        for (int i = 0; i <= 20; i++)
+        {
+            for (int j = 0; j <= 16; j++)
+            {
+                if (i % 2 == 1 && j % 2 == 1)
+                {
                     id = IdSupplier.getId();
-                    wall = new Wall(this, new Vector2(27*i, 27*j));
+                    wall = new Wall(this, new Vector2(27 * i, 27 * j));
                     wall.setId(id);
                     objects.put(id, wall);
                 }
@@ -36,31 +40,36 @@ public class GameState extends State implements GameObjectsContainer {
         }
     }
 
-
     @Override
-    public void render(SpriteBatch batch) {
-        for(GameObject object: objects.values()){
+    public void render(SpriteBatch batch)
+    {
+        for (GameObject object : objects.values())
+        {
             object.render(batch);
         }
     }
 
     @Override
-    public void update() {
+    public void update()
+    {
 
     }
 
     @Override
-    public void add(GameObject object) {
+    public void add(GameObject object)
+    {
         objects.put(object.getId(), object);
     }
 
     @Override
-    public void remove(GameObject object) {
+    public void remove(GameObject object)
+    {
         objects.remove(object.getId());
     }
 
     @Override
-    public Map<Long, GameObject> getGameObjects() {
+    public Map<Long, GameObject> getGameObjects()
+    {
         return objects;
     }
 }

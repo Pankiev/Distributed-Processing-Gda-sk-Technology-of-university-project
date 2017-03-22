@@ -20,7 +20,7 @@ public class GameClient extends ApplicationAdapter
 {
     private SpriteBatch batch;
     public static Assets assets;
-    private StateManager states;
+    public static StateManager states;
     private Client client;
 
     @Override

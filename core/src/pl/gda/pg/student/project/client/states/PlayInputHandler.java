@@ -5,14 +5,15 @@ import pl.gda.pg.student.project.libgdxcommon.input.InputProcessorAdapter;
 import pl.gda.pg.student.project.libgdxcommon.input.KeyHandler;
 
 /**
- * Created by Bartek on 22.03.2017.
- * Gry Karciane
+ * Created by Bartek on 22.03.2017. Gry Karciane
  */
-public class InputHandler extends InputProcessorAdapter {
+public class PlayInputHandler extends InputProcessorAdapter
+{
 
     private Player playerObject;
 
-    public InputHandler(Player playerObject){
+    public PlayInputHandler(Player playerObject)
+    {
         this.playerObject = playerObject;
     }
 

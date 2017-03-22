@@ -11,7 +11,7 @@ import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
-import pl.gda.pg.student.project.server.states.GameState;
+import pl.gda.pg.student.project.server.states.ServerPlayState;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class GameServer extends ApplicationAdapter
     public static Assets assets;
     private StateManager states;
     private Server server;
-    private GameState gameState;
+    private ServerPlayState gameState;
 
     @Override
     public void create()
@@ -30,7 +30,7 @@ public class GameServer extends ApplicationAdapter
         assets = new Assets();
         batch = new SpriteBatch();
         states = new StateManager();
-        gameState = new GameState();
+        gameState = new ServerPlayState();
         states.push(gameState);
     }
 
