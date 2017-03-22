@@ -1,8 +1,5 @@
 package pl.gda.pg.student.project.libgdxcommon;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
@@ -10,12 +7,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Assets
 {
-    private String assetsPath = "assets";
+    private String assetsPath = "core/assets";
     private Map<String, Class<?>> classTypes = new HashMap<String, Class<?>>();
     private AssetManager assets = new AssetManager();
     private BitmapFont font = new BitmapFont();
