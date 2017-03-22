@@ -1,10 +1,14 @@
 package pl.gda.pg.student.project.server.states;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.GameObjectsContainer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
+import pl.gda.pg.student.project.server.objects.Wall;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,12 +18,30 @@ import java.util.Map;
  */
 public class GameState extends State implements GameObjectsContainer {
 
-    private HashMap<Long, GameObject> objects;
+    private Map<Long, GameObject> objects;
+
+    public GameState(){
+        objects = Collections.synchronizedMap(new HashMap<Long, GameObject>());
+        Wall wall;
+        long id;
+        for (int i = 0; i <= 20; i++) {
+            for (int j = 0; j <= 16; j++) {
+                if (i % 2 == 1 && j % 2 == 1) {
+                    id = IdSupplier.getId();
+                    wall = new Wall(this, new Vector2(27*i, 27*j));
+                    wall.setId(id);
+                    objects.put(id, wall);
+                }
+            }
+        }
+    }
 
 
     @Override
     public void render(SpriteBatch batch) {
-
+        for(GameObject object: objects.values()){
+            object.render(batch);
+        }
     }
 
     @Override

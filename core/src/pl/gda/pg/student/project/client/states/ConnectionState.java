@@ -1,17 +1,16 @@
 package pl.gda.pg.student.project.client.states;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
-
 import pl.gda.pg.student.project.client.GameClient;
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.State;
+
+import java.io.IOException;
 
 public class ConnectionState extends State implements TextInputListener
 {
