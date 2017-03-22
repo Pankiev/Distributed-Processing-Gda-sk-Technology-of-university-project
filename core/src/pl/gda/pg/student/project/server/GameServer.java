@@ -37,9 +37,9 @@ public class GameServer extends ApplicationAdapter
     private Server initializeServer()
     {
         Server server = new Server();
-        tryBindingServer(server, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
         server.addListener(new ServerListener());
         server.start();
+        tryBindingServer(server, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
         return server;
     }
 

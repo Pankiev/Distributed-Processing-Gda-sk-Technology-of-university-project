@@ -41,7 +41,6 @@ public class GameClient extends ApplicationAdapter
         kryo = PacketsRegisterer.registerAllAnnotated(kryo);
         kryo = PacketsRegisterer.registerDefaults(kryo);
         client.addListener(new ClientListener());
-        client.start();
         return client;
     }
 

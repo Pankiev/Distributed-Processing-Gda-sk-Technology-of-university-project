@@ -39,22 +39,19 @@ public class ConnectionState extends State implements TextInputListener
     @Override
     public void update()
     {
-        if(client.isConnected())
-            System.out.println("Connected client side, id: " + client.getID());
     }
 
     @Override
     public void input(String ip)
     {
-        Thread connectThread = new Thread(() -> tryConnecting(ip));
-        connectThread.start();
+        tryConnecting(ip);
     }
 
     private void tryConnecting(String ip)
     {
         try
         {
-       
+            client.start();
             client.connect(2000, ip, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
         } catch (IOException e)
         {
