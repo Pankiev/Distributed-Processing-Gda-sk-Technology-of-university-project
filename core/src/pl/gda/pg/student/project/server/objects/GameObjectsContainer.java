@@ -6,6 +6,8 @@ import java.util.Map;
 
 public interface GameObjectsContainer
 {
+    GameObject getObject(long id);
+    
     void add(GameObject object);
     
     void remove(GameObject object);

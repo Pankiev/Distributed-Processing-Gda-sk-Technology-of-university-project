@@ -12,9 +12,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Bartek on 22.03.2017. Gry Karciane
- */
 public class ServerPlayState extends State implements GameObjectsContainer
 {
 
@@ -71,5 +68,17 @@ public class ServerPlayState extends State implements GameObjectsContainer
     public Map<Long, GameObject> getGameObjects()
     {
         return objects;
+    }
+    
+    @Override
+    public GameObject getObject(long id)
+    {
+        return objects.get(id);
+    }
+    
+    public void updateObjectPosition(long id, Vector2 position)
+    {
+        GameObject operationTarget = objects.get(id);
+        operationTarget.setPosition(position.x, position.y);
     }
 }
