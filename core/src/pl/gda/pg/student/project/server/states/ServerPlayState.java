@@ -15,6 +15,7 @@ import java.util.Map;
 
 public class ServerPlayState extends State implements GameObjectsContainer
 {
+    private final static int TILE_SIZE = 27;
     private Map<Long, GameObject> objects;
 
     public ServerPlayState()
@@ -30,13 +31,13 @@ public class ServerPlayState extends State implements GameObjectsContainer
                 id = IdSupplier.getId();
                 if (i % 2 == 1 && j % 2 == 1)
                 {
-                    wall = new Wall(this, new Vector2(27 * i, 27 * j));
+                    wall = new Wall(this, new Vector2(TILE_SIZE * i, TILE_SIZE * j));
                     wall.setId(id);
                     objects.put(id, wall);
                 }
                 else
                 {
-                    box = new Box(this, new Vector2(27*i, 27*));
+                    box = new Box(this, new Vector2(TILE_SIZE*i, TILE_SIZE*j));
                     box.setId(id);
                     objects.put(id, box);
                 }

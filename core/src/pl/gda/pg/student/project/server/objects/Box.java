@@ -8,7 +8,7 @@ import pl.gda.pg.student.project.server.GameServer;
 public class Box extends GameObject {
 
 
-    public Wall(State linkedState, Vector2 position) {
+    public Box(State linkedState, Vector2 position) {
         super(GameServer.assets.get("skrzynka.bmp"), linkedState);
         super.setX(position.x);
         super.setY(position.y);
