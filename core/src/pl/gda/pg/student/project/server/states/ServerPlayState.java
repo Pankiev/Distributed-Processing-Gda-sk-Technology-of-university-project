@@ -1,8 +1,7 @@
 package pl.gda.pg.student.project.server.states;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +13,7 @@ import pl.gda.pg.student.project.server.objects.GameObjectsContainer;
 
 public class ServerPlayState extends State implements GameObjectsContainer
 {
-	private Map<Long, GameObject> objects = Collections.synchronizedMap(new HashMap<>());
+	private Map<Long, GameObject> objects = new ConcurrentHashMap<>();
 
     public ServerPlayState()
     {

@@ -1,9 +1,8 @@
 package pl.gda.pg.student.project.client.states;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -17,7 +16,7 @@ import pl.gda.pg.student.project.packets.DisconnectPacket;
 
 public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {
-	private Map<Long, ConnectionModelObject> gameObjects = Collections.synchronizedMap(new HashMap<>());
+	private Map<Long, ConnectionModelObject> gameObjects = new ConcurrentHashMap<>();
     private ModelPlayer player;
     private PlayInputHandler inputHandler;
     private Client client;
@@ -35,11 +34,8 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     @Override
     public void render(SpriteBatch batch)
     {
-		synchronized (gameObjects)
-		{
-			for (Entry<Long, ConnectionModelObject> object : gameObjects.entrySet())
-				object.getValue().render(batch);
-		}
+		for (Entry<Long, ConnectionModelObject> object : gameObjects.entrySet())
+			object.getValue().render(batch);
     }
 
     @Override
