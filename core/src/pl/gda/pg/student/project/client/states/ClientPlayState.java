@@ -8,12 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
 
+import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
+import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
 import pl.gda.pg.student.project.client.objects.Player;
-import pl.gda.pg.student.project.libgdxcommon.GameObjectsContainer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 
-public class ClientPlayState extends State
+public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {
     private Map<Long, GameObject> gameObjects = Collections.synchronizedMap(new TreeMap<>());
     private Player player;
@@ -61,6 +62,20 @@ public class ClientPlayState extends State
     public Map<Long, GameObject> getGameObjects()
     {
         return gameObjects;
+    }
+
+    @Override
+    public void add(ConnectionModelObject object)
+    {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void remove(ConnectionModelObject object)
+    {
+        // TODO Auto-generated method stub
+        
     }
 
 }

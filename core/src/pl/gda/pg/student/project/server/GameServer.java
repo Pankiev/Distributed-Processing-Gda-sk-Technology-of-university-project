@@ -12,8 +12,10 @@ import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
+import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
 
@@ -116,9 +118,30 @@ public class GameServer extends ApplicationAdapter
             }
             else if(object instanceof ObjectMoveLeftPacket)
             {
-                ObjectMoveLeftPacket
+                ObjectMoveLeftPacket moveLeftPacket = (ObjectMoveLeftPacket)object;
+                MovableGameObject operationTarget = (MovableGameObject)gameState.getObject(moveLeftPacket.id);
+                operationTarget.moveLeft(gameState.getGameObjects().values());
+                ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
+                server.sendToAllTCP(updatePositionPacket);
+            }
+            else if(object instanceof ObjectMoveRightPacket)
+            {
+                ObjectMoveRightPacket moveRightPacket = (ObjectMoveRightPacket)object;
+                MovableGameObject operationTarget = (MovableGameObject)gameState.getObject(moveRightPacket.id);
+                operationTarget.moveLeft(gameState.getGameObjects().values());
+                ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
+                server.sendToAllTCP(updatePositionPacket);
             }
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
+        }
+
+        private ObjectSetPositionPacket createSetPositionPacketByObject(GameObject object)
+        {
+            ObjectSetPositionPacket packet = new ObjectSetPositionPacket();
+            packet.id = object.getId();
+            packet.x = object.getX();
+            packet.y = object.getY();
+            return packet;
         }
         
     }
