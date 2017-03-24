@@ -7,6 +7,7 @@ import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.State;
+import pl.gda.pg.student.project.packets.DisconnectPacket;
 
 import java.util.Collections;
 import java.util.Map;
@@ -57,7 +58,8 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     @Override
     public void remove(long id) {
         if (id == player.getId()) {
-
+            client.sendTCP(new DisconnectPacket());
+            Gdx.app.exit();
         } else {
             gameObjects.remove(id);
         }
