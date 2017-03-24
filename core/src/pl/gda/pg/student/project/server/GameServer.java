@@ -20,7 +20,9 @@ import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
+import pl.gda.pg.student.project.server.objects.ServerPlayer;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
 
 import java.io.IOException;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
+    private PlayerPositioner positioner = new PlayerPositioner();
     private SpriteBatch batch;
     public static Assets assets;
     private StateManager states;
@@ -87,25 +90,45 @@ public class GameServer extends ApplicationAdapter
         assets.dispose();
     }
     
-    private void userConnected(int id)
+    private void userConnected(int clientId)
+    {
+        sendGameStateInfo(clientId);
+        Vector2 playerPosition = positioner.getPosition();
+        informOthersAboutNewPlayer(clientId, playerPosition);
+        sendPositionUpdateInfoToNewClient(clientId, playerPosition);
+    }
+
+    private void sendGameStateInfo(int clientId)
     {
         Map<Long, GameObject> gameObjects = gameState.getGameObjects();
         for(GameObject object : gameObjects.values())
-            sendObjectCreationInfo(object);
-        
-        CreateObjectPacket createNewPlayer = new CreateObjectPacket();
-        createNewPlayer.id = id;
-        
+            sendObjectCreationInfo(object, clientId);
     }
     
-    private void sendObjectCreationInfo(GameObject object)
+    private void sendObjectCreationInfo(GameObject object, int targetClientId)
     {
         CreateObjectPacket createObjectPacket = new CreateObjectPacket();
         createObjectPacket.id = object.getId();
         createObjectPacket.xPosition = object.getX();
         createObjectPacket.yPosition = object.getY();
         createObjectPacket.objectType = ObjectsIdentifier.getObjectIdentifier(object.getClass());
-        server.sendToAllTCP(createObjectPacket);
+        server.sendToAllTCP(targetClientId);
+    }
+
+    private void informOthersAboutNewPlayer(int id, Vector2 playerPosition)
+    {
+        CreateObjectPacket createNewPlayer = new CreateObjectPacket();
+        createNewPlayer.id = id;
+        createNewPlayer.objectType = ObjectsIdentifier.getObjectIdentifier(ServerPlayer.class);
+        createNewPlayer.xPosition = playerPosition.x;
+        createNewPlayer.yPosition = playerPosition.y;
+        server.sendToAllExceptTCP(id, createNewPlayer);
+    }
+    
+    private void sendPositionUpdateInfoToNewClient(int clientId, Vector2 playerPosition)
+    {
+        
+        
     }
 
     private void userDisconnected(long id){
