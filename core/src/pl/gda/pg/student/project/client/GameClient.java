@@ -98,7 +98,7 @@ public class GameClient extends ApplicationAdapter
         
     }
 
-    public static void setPlayState(State playState) {
+    public static void setPlayState(ClientPlayState playState) {
         GameClient.playState = playState;
     }
 }

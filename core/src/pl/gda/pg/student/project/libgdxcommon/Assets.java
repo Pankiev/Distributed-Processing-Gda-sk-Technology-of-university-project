@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class Assets
 {
-    private String assetsPath = "core/assets";
+    private String assetsPath = "assets";
     private Map<String, Class<?>> classTypes = new HashMap<String, Class<?>>();
     private AssetManager assets = new AssetManager();
     private BitmapFont font = new BitmapFont();
