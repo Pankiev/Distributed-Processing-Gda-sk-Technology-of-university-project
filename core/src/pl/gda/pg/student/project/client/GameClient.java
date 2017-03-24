@@ -17,7 +17,7 @@ import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
-import pl.gda.pg.student.project.packets.creating.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 
 public class GameClient extends ApplicationAdapter

@@ -4,7 +4,6 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -14,7 +13,8 @@ import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
-import pl.gda.pg.student.project.packets.creating.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
@@ -108,6 +108,12 @@ public class GameServer extends ApplicationAdapter
         server.sendToAllTCP(createObjectPacket);
     }
 
+    private void userDisconnected(long id){
+        RemoveObjectInfo removeObjectInfo = new RemoveObjectInfo();
+        removeObjectInfo.id = id;
+        server.sendToAllTCP(removeObjectInfo);
+    }
+
     private static class CannotBindServerException extends GameException
     {
         public CannotBindServerException(String message)
@@ -130,6 +136,7 @@ public class GameServer extends ApplicationAdapter
         @Override
         public void disconnected(Connection connection)
         {
+            userDisconnected(connection.getID());
             System.out.println("Client connected server side, id: " + connection.getID());
         }
 
