@@ -10,6 +10,7 @@ import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
+import pl.gda.pg.student.project.client.objects.ModelObjectsFactory;
 import pl.gda.pg.student.project.client.states.ClientPlayState;
 import pl.gda.pg.student.project.client.states.ConnectionState;
 import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
@@ -93,7 +94,10 @@ public class GameClient extends ApplicationAdapter
                 ConnectionModelObject connectionModelObject = playState.getGameObjectById(objectSetPositionPacket.id);
                 connectionModelObject.positionUpdate(new Vector2(objectSetPositionPacket.x, objectSetPositionPacket.y));
             } else if(object instanceof CreateObjectPacket){
-                
+                CreateObjectPacket createObjectPacket = (CreateObjectPacket)object;
+                ConnectionModelObject newObject = ModelObjectsFactory.produce(createObjectPacket.objectType, new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
+                newObject.setId(createObjectPacket.id);
+                playState.add(newObject);
             }
 
             System.out.println("Client side: object reveived from server, client id: " + connection.getID() + " " + object);
