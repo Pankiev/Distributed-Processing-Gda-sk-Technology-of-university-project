@@ -12,6 +12,10 @@ public class Player extends ConnectionModelObject
     private Texture left = GameClient.assets.get("pacman_lewo.bmp");
     private Texture right = GameClient.assets.get("pacman_prawo.bmp");
 
+    public Player(){
+        super(GameClient.assets.get("pacman_dol.bmp"), new Vector2(0,0));
+    }
+
     public Player(Vector2 position)
     {
         super(GameClient.assets.get("pacman_dol.bmp"), position);
