@@ -10,6 +10,9 @@ public class ServerLauncher
     public static void main(String[] arg)
     {
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.width = 837;
+        config.height = 567;
+        config.resizable = false;
         new LwjglApplication(new GameServer(), config);
     }
 }
