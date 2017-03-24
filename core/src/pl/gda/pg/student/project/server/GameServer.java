@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -13,10 +14,17 @@ import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
-import pl.gda.pg.student.project.packets.movement.*;
+import pl.gda.pg.student.project.packets.creating.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
@@ -79,6 +87,27 @@ public class GameServer extends ApplicationAdapter
         assets.dispose();
     }
     
+    private void userConnected(int id)
+    {
+        Map<Long, GameObject> gameObjects = gameState.getGameObjects();
+        for(GameObject object : gameObjects.values())
+            sendObjectCreationInfo(object);
+        
+        CreateObjectPacket createNewPlayer = new CreateObjectPacket();
+        createNewPlayer.id = id;
+        
+    }
+    
+    private void sendObjectCreationInfo(GameObject object)
+    {
+        CreateObjectPacket createObjectPacket = new CreateObjectPacket();
+        createObjectPacket.id = object.getId();
+        createObjectPacket.xPosition = object.getX();
+        createObjectPacket.yPosition = object.getY();
+        createObjectPacket.objectType = ObjectsIdentifier.getObjectIdentifier(object.getClass());
+        server.sendToAllTCP(createObjectPacket);
+    }
+
     private static class CannotBindServerException extends GameException
     {
         public CannotBindServerException(String message)
@@ -94,6 +123,7 @@ public class GameServer extends ApplicationAdapter
         @Override
         public void connected(Connection connection)
         {
+            userConnected(connection.getID());
             System.out.println("Client connected server side, id: " + connection.getID());
         }
 
