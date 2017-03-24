@@ -20,7 +20,7 @@ public class ServerPlayer extends MovableGameObject
 
     @Override
     public String getIdentifier() {
-        return "ModelPlayer";
+        return ObjectsIdentifier.getObjectIdentifier(ServerPlayer.class);
     }
 
 }

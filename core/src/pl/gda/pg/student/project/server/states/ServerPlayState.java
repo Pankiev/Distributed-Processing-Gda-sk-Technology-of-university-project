@@ -33,6 +33,10 @@ public class ServerPlayState extends State implements GameObjectsContainer
                     wall.setId(id);
                     objects.put(id, wall);
                 }
+                else
+                {
+
+                }
             }
         }
     }

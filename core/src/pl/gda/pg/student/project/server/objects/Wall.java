@@ -21,6 +21,6 @@ public class Wall extends GameObject {
 
     @Override
     public String getIdentifier() {
-        return "ModelWall";
+        return ObjectsIdentifier.getObjectIdentifier(Wall.class);
     }
 }
