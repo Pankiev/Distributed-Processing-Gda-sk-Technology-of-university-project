@@ -110,7 +110,7 @@ public class GameServer extends ApplicationAdapter
         createObjectPacket.xPosition = object.getX();
         createObjectPacket.yPosition = object.getY();
         createObjectPacket.objectType = ObjectsIdentifier.getObjectIdentifier(object.getClass());
-        server.sendToAllTCP(targetClientId);
+        server.sendToAllTCP(createObjectPacket);
     }
 
     private void informOthersAboutNewPlayer(int id, Vector2 playerPosition)
