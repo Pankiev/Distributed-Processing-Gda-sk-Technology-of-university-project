@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
 
-import pl.gda.pg.student.project.client.objects.Box;
 import pl.gda.pg.student.project.client.objects.Player;
 import pl.gda.pg.student.project.libgdxcommon.GameObjectsContainer;
 import pl.gda.pg.student.project.libgdxcommon.State;
@@ -17,13 +16,15 @@ import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 public class ClientPlayState extends State implements GameObjectsContainer
 {
     private Map<Long, GameObject> gameObjects = Collections.synchronizedMap(new TreeMap<>());
-    private Player player = new Player(this);
-    private PlayInputHandler inputHandler = new PlayInputHandler(player);
+    private Player player;
+    private PlayInputHandler inputHandler;
     private Client client;
 
     public ClientPlayState(Client client)
     {
         this.client = client;
+        player = new Player(this);
+        inputHandler = new PlayInputHandler(player, client);
         Gdx.input.setInputProcessor(inputHandler);
         player.setId(client.getID());
         add(player);

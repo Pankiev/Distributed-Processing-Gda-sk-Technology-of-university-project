@@ -1,4 +1,4 @@
-package pl.gda.pg.student.project.kryonetcommon.packets;
+package pl.gda.pg.student.project.packets.creating;
 
 import pl.gda.pg.student.project.kryonetcommon.Registerable;
 

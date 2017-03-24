@@ -1,68 +1,70 @@
 package pl.gda.pg.student.project.client.states;
 
+import com.esotericsoftware.kryonet.Client;
+
 import pl.gda.pg.student.project.client.objects.Player;
 import pl.gda.pg.student.project.libgdxcommon.input.InputProcessorAdapter;
 import pl.gda.pg.student.project.libgdxcommon.input.KeyHandler;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
 
-/**
- * Created by Bartek on 22.03.2017. Gry Karciane
- */
+
 public class PlayInputHandler extends InputProcessorAdapter
 {
-
     private Player playerObject;
+    private Client connection;
 
-    public PlayInputHandler(Player playerObject)
+    public PlayInputHandler(Player playerObject, Client connectedClient)
     {
+        this.connection = connectedClient;
         this.playerObject = playerObject;
     }
 
     public class WKeyHandler implements KeyHandler
     {
-
         @Override
         public void handle()
         {
-            playerObject.moveUp(); 
-
+            ObjectMoveUpPacket moveUpPacket = new ObjectMoveUpPacket();
+            moveUpPacket.id = playerObject.getId();
+            connection.sendTCP(moveUpPacket);
         }
-
     }
 
     public class SKeyHandler implements KeyHandler
     {
-
         @Override
         public void handle()
         {
-            playerObject.moveDown();
-
+            ObjectMoveDownPacket moveDownPacket = new ObjectMoveDownPacket();
+            moveDownPacket.id = playerObject.getId();
+            connection.sendTCP(moveDownPacket);
         }
-
     }
 
     public class AKeyHandler implements KeyHandler
     {
-
         @Override
         public void handle()
         {
-            playerObject.moveLeft();
-
+            ObjectMoveLeftPacket moveLeftPacket = new ObjectMoveLeftPacket();
+            moveLeftPacket.id = playerObject.getId();
+            connection.sendTCP(moveLeftPacket);
         }
 
     }
 
     public class DKeyHandler implements KeyHandler
     {
-
         @Override
         public void handle()
         {
-            playerObject.moveRight();
-
+            ObjectMoveRightPacket moveRightPacket = new ObjectMoveRightPacket();
+            moveRightPacket.id = playerObject.getId();
+            connection.sendTCP(moveRightPacket);
         }
-
     }
 
 }
