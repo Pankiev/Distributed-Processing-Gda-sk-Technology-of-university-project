@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
@@ -134,7 +135,8 @@ public class GameServer extends ApplicationAdapter
         server.sendToAllExceptTCP(clientId, setPositionPacket);
     }
 
-    private void userDisconnected(long id){
+    private void userDisconnected(long id)
+    {
         RemoveObjectInfo removeObjectInfo = new RemoveObjectInfo();
         removeObjectInfo.id = id;
         server.sendToAllTCP(removeObjectInfo);
