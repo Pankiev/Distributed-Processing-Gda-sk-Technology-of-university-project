@@ -3,7 +3,7 @@ package pl.gda.pg.student.project.server.objects;
 import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.libgdxcommon.objects.GameServer;
+import pl.gda.pg.student.project.server.GameServer;
 
 public class Wall extends GameObject {
 
