@@ -15,6 +15,7 @@ import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.DisconnectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.*;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
@@ -92,8 +93,17 @@ public class GameServer extends ApplicationAdapter
     {
         sendGameStateInfo(clientId);
         Vector2 playerPosition = positioner.getPosition();
+        addPlayerObjectOnServer(clientId, playerPosition);
         informOthersAboutNewPlayer(clientId, playerPosition);
         sendPositionUpdateInfoToNewClient(clientId, playerPosition);
+    }
+
+    private void addPlayerObjectOnServer(int clientId, Vector2 playerPosition)
+    {
+        ServerPlayer newPlayer = new ServerPlayer(gameState);
+        newPlayer.setId(clientId);
+        newPlayer.setPosition(playerPosition.x, playerPosition.y);
+        gameState.add(newPlayer);
     }
 
     private void sendGameStateInfo(int clientId)
@@ -207,6 +217,8 @@ public class GameServer extends ApplicationAdapter
                 ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
                 server.sendToAllTCP(updatePositionPacket);
             }
+            else if(object instanceof DisconnectPacket)
+                connection.close();
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
         }
 
