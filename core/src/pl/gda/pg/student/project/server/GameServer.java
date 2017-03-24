@@ -5,10 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
+import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
@@ -50,6 +52,9 @@ public class GameServer extends ApplicationAdapter
     private Server initializeServer()
     {
         Server server = new Server();
+        Kryo kryo = server.getKryo();
+        kryo = PacketsRegisterer.registerAllAnnotated(kryo);
+        kryo = PacketsRegisterer.registerDefaults(kryo);
         server.addListener(new ServerListener());
         server.start();
         tryBindingServer(server, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
@@ -120,7 +125,7 @@ public class GameServer extends ApplicationAdapter
         createObjectPacket.xPosition = object.getX();
         createObjectPacket.yPosition = object.getY();
         createObjectPacket.objectType = ObjectsIdentifier.getObjectIdentifier(object.getClass());
-        server.sendToAllTCP(createObjectPacket);
+        server.sendToTCP(targetClientId, createObjectPacket);
     }
 
     private void informOthersAboutNewPlayer(int id, Vector2 playerPosition)

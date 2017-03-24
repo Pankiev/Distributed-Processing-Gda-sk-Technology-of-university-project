@@ -42,13 +42,13 @@ public class ConnectionState extends State implements TextInputListener
     }
 
     @Override
-    public void input(String ip)
-    {
+    public void input(String ip) {
         tryConnecting(ip);
-        ClientPlayState clientPlayState = new ClientPlayState(client);
-        if(client.isConnected())
+        if (client.isConnected()) {
+            ClientPlayState clientPlayState = new ClientPlayState(client);
             GameClient.states.set(clientPlayState);
-        GameClient.setPlayState(clientPlayState);
+            GameClient.setPlayState(clientPlayState);
+        }
     }
 
     private void tryConnecting(String ip)

@@ -98,7 +98,8 @@ public class GameClient extends ApplicationAdapter
                 CreateObjectPacket createObjectPacket = (CreateObjectPacket)object;
                 ConnectionModelObject newObject = ModelObjectsFactory.produce(createObjectPacket.objectType, new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
                 newObject.setId(createObjectPacket.id);
-                playState.add(newObject);
+                if(playState != null)
+                    playState.add(newObject);
             } else if(object instanceof RemoveObjectInfo){
                 RemoveObjectInfo removeObjectInfo = (RemoveObjectInfo)object;
                 playState.remove(removeObjectInfo.id);
