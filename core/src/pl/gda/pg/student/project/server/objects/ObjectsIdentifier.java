@@ -12,6 +12,7 @@ public class ObjectsIdentifier
     {
         identifiers.put(ServerPlayer.class, "Player");
         identifiers.put(Wall.class, "Wall");
+        identifiers.put(Box.class, "Box");
     }
     
     public static String getObjectIdentifier(Class<?> type)
