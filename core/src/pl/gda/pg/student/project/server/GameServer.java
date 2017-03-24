@@ -14,8 +14,10 @@ import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
 
@@ -128,7 +130,23 @@ public class GameServer extends ApplicationAdapter
             {
                 ObjectMoveRightPacket moveRightPacket = (ObjectMoveRightPacket)object;
                 MovableGameObject operationTarget = (MovableGameObject)gameState.getObject(moveRightPacket.id);
-                operationTarget.moveLeft(gameState.getGameObjects().values());
+                operationTarget.moveRight(gameState.getGameObjects().values());
+                ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
+                server.sendToAllTCP(updatePositionPacket);
+            }
+            else if (object instanceof ObjectMoveUpPacket)
+            {
+                ObjectMoveUpPacket moveRightPacket = (ObjectMoveUpPacket)object;
+                MovableGameObject operationTarget = (MovableGameObject)gameState.getObject(moveRightPacket.id);
+                operationTarget.moveUp(gameState.getGameObjects().values());
+                ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
+                server.sendToAllTCP(updatePositionPacket);
+            }
+            else if(object instanceof ObjectMoveDownPacket)
+            {
+                ObjectMoveDownPacket moveRightPacket = (ObjectMoveDownPacket)object;
+                MovableGameObject operationTarget = (MovableGameObject)gameState.getObject(moveRightPacket.id);
+                operationTarget.moveDown(gameState.getGameObjects().values());
                 ObjectSetPositionPacket updatePositionPacket = createSetPositionPacketByObject(operationTarget);
                 server.sendToAllTCP(updatePositionPacket);
             }

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.client.GameClient;
 
-
 public class Player extends ConnectionModelObject
 {
     private Texture down = GameClient.assets.get("pacman_dol.bmp");
@@ -12,8 +11,9 @@ public class Player extends ConnectionModelObject
     private Texture left = GameClient.assets.get("pacman_lewo.bmp");
     private Texture right = GameClient.assets.get("pacman_prawo.bmp");
 
-    public Player(){
-        super(GameClient.assets.get("pacman_dol.bmp"), new Vector2(0,0));
+    public Player()
+    {
+        super(GameClient.assets.get("pacman_dol.bmp"), new Vector2(0, 0));
     }
 
     public Player(Vector2 position)
@@ -21,21 +21,24 @@ public class Player extends ConnectionModelObject
         super(GameClient.assets.get("pacman_dol.bmp"), position);
     }
 
-    public void lookUp(){
+    public void lookUp()
+    {
         super.setTexture(up);
     }
 
-    public void lookDown(){
+    public void lookDown()
+    {
         super.setTexture(down);
     }
 
-    public void lookLeft(){
+    public void lookLeft()
+    {
         super.setTexture(left);
     }
 
-    public void lookRight(){
+    public void lookRight()
+    {
         super.setTexture(right);
     }
-
 
 }
