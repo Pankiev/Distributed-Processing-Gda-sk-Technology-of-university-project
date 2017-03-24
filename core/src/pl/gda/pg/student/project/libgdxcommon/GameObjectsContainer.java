@@ -6,6 +6,8 @@ import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 
 public interface GameObjectsContainer
 {
+    GameObject getObject(long id);
+    
     void add(GameObject object);
     
     void remove(GameObject object);
