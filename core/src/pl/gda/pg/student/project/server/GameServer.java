@@ -132,7 +132,8 @@ public class GameServer extends ApplicationAdapter
         server.sendToAllExceptTCP(clientId, setPositionPacket);
     }
 
-    private void userDisconnected(long id){
+    private void userDisconnected(long id)
+    {
         RemoveObjectInfo removeObjectInfo = new RemoveObjectInfo();
         removeObjectInfo.id = id;
         server.sendToAllTCP(removeObjectInfo);
