@@ -8,6 +8,8 @@ public interface ConnectionModelObjectContainer
 
     void remove(ConnectionModelObject object);
 
+    void remove(long id);
+
     Map<Long, ConnectionModelObject> getGameObjects();
 
     ConnectionModelObject getGameObjectById(long id);

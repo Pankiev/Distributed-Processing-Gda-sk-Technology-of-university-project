@@ -18,6 +18,7 @@ import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 
 public class GameClient extends ApplicationAdapter
@@ -98,6 +99,9 @@ public class GameClient extends ApplicationAdapter
                 ConnectionModelObject newObject = ModelObjectsFactory.produce(createObjectPacket.objectType, new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
                 newObject.setId(createObjectPacket.id);
                 playState.add(newObject);
+            } else if(object instanceof RemoveObjectInfo){
+                RemoveObjectInfo removeObjectInfo = (RemoveObjectInfo)object;
+                playState.remove(removeObjectInfo.id);
             }
 
             System.out.println("Client side: object reveived from server, client id: " + connection.getID() + " " + object);
