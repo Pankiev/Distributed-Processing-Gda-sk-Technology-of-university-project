@@ -1,8 +1,8 @@
-package pl.gda.pg.student.project.libgdxcommon;
-
-import java.util.Map;
+package pl.gda.pg.student.project.server.objects;
 
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
+
+import java.util.Map;
 
 public interface GameObjectsContainer
 {

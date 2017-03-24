@@ -1,24 +1,21 @@
 package pl.gda.pg.student.project.libgdxcommon.objects;
 
-import java.util.Collection;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
 import pl.gda.pg.student.project.libgdxcommon.State;
+
+import java.util.Collection;
 
 public abstract class GameObject extends Actor
 {
     private long id;
     private Sprite sprite;
     private Rectangle rectangle = new Rectangle();
-    protected boolean needsPositionUpdate = false;
     protected State linkedState;
 
     protected GameObject(Texture lookout, State linkedState)

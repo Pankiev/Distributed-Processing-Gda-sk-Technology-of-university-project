@@ -1,56 +1,35 @@
 package pl.gda.pg.student.project.client.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.client.GameClient;
-import pl.gda.pg.student.project.libgdxcommon.State;
-import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 
-/**
- * Created by Bartek on 22.03.2017. Gry Karciane
- */
-public class Player extends MovableGameObject
+public class Player extends ConnectionModelObject
 {
     private Texture down = GameClient.assets.get("pacman_dol.bmp");
     private Texture up = GameClient.assets.get("pacman_gora.bmp");
     private Texture left = GameClient.assets.get("pacman_lewo.bmp");
     private Texture right = GameClient.assets.get("pacman_prawo.bmp");
 
-    public Player(State linkedState)
+    public Player(Vector2 position)
     {
-        super(GameClient.assets.get("pacman_dol.bmp"), linkedState);
+        super(GameClient.assets.get("pacman_dol.bmp"), position);
     }
 
-    @Override
-    public void moveUp()
-    {
-        super.moveUp();
-        super.getSprite().setTexture(up);
+    public void lookUp(){
+        super.setTexture(up);
     }
 
-    @Override
-    public void moveDown()
-    {
-        super.moveDown();
-        super.getSprite().setTexture(down);
+    public void lookDown(){
+        super.setTexture(down);
     }
 
-    @Override
-    public void moveLeft()
-    {
-        super.moveLeft();
-        super.getSprite().setTexture(left);
+    public void lookLeft(){
+        super.setTexture(left);
     }
 
-    @Override
-    public void moveRight()
-    {
-        super.moveRight();
-        super.getSprite().setTexture(right);
-    }
-
-    @Override
-    public void update()
-    {
+    public void lookRight(){
+        super.setTexture(right);
     }
 
 }
