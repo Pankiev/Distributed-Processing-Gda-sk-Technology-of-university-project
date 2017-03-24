@@ -55,6 +55,15 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     }
 
     @Override
+    public void remove(long id) {
+        if (id == player.getId()) {
+
+        } else {
+            gameObjects.remove(id);
+        }
+    }
+
+    @Override
     public Map<Long, ConnectionModelObject> getGameObjects()
     {
         return gameObjects;
