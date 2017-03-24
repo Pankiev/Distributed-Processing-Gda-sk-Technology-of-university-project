@@ -8,9 +8,9 @@ public class ModelObjectsFactory
 {
     public static ConnectionModelObject produce(String identifier, Vector2 position)
     {
-        if(identifier.equals(ClientObjectIdentifier.getObjectIdentifier(ModelPlayer.class)))
+        if(identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelPlayer.class)))
             return new ModelPlayer(position);
-        else if(identifier.equals(ClientObjectIdentifier.getObjectIdentifier(ModelWall.class)))
+        else if(identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelWall.class)))
             return new ModelWall(position);
         
         throw new ObjectIdentifierNotFoundException();
