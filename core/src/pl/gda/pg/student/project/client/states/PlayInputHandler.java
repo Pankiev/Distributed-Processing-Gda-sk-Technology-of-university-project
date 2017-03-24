@@ -2,7 +2,7 @@ package pl.gda.pg.student.project.client.states;
 
 import com.esotericsoftware.kryonet.Client;
 
-import pl.gda.pg.student.project.client.objects.Player;
+import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.input.InputProcessorAdapter;
 import pl.gda.pg.student.project.libgdxcommon.input.KeyHandler;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
@@ -13,10 +13,10 @@ import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
 
 public class PlayInputHandler extends InputProcessorAdapter
 {
-    private Player playerObject;
+    private ModelPlayer playerObject;
     private Client connection;
 
-    public PlayInputHandler(Player playerObject, Client connectedClient)
+    public PlayInputHandler(ModelPlayer playerObject, Client connectedClient)
     {
         this.connection = connectedClient;
         this.playerObject = playerObject;

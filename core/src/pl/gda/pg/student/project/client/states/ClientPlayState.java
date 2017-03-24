@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
-import pl.gda.pg.student.project.client.objects.Player;
+import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 
 import java.util.Collections;
@@ -15,14 +15,14 @@ import java.util.TreeMap;
 public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {
     private Map<Long, ConnectionModelObject> gameObjects = Collections.synchronizedMap(new TreeMap<>());
-    private Player player;
+    private ModelPlayer player;
     private PlayInputHandler inputHandler;
     private Client client;
 
     public ClientPlayState(Client client)
     {
         this.client = client;
-        player = new Player();
+        player = new ModelPlayer();
         inputHandler = new PlayInputHandler(player, client);
         Gdx.input.setInputProcessor(inputHandler);
         player.setId(client.getID());

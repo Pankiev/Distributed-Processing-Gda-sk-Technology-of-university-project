@@ -5,10 +5,6 @@ import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.server.GameServer;
 
-/**
- * Created by Bartek on 22.03.2017.
- * Gry Karciane
- */
 public class Wall extends GameObject {
 
 
@@ -21,5 +17,10 @@ public class Wall extends GameObject {
     @Override
     public void update() {
 
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "ModelWall";
     }
 }

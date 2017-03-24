@@ -4,9 +4,6 @@ import pl.gda.pg.student.project.client.GameClient;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 
-/**
- * Created by Bartek on 22.03.2017. Gry Karciane
- */
 public class ServerPlayer extends MovableGameObject
 {
 
@@ -19,6 +16,11 @@ public class ServerPlayer extends MovableGameObject
     public void update()
     {
 
+    }
+
+    @Override
+    public String getIdentifier() {
+        return "ModelPlayer";
     }
 
 }

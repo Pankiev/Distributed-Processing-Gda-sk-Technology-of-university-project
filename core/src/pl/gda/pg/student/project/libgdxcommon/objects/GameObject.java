@@ -31,6 +31,8 @@ public abstract class GameObject extends Actor
 
     public abstract void update();
 
+    public abstract String getIdentifier();
+
     private boolean isColliding(GameObject gameObject)
     {
         return isColliding(gameObject.rectangle);
