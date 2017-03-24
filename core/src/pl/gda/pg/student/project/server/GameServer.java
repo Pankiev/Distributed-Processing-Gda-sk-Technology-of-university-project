@@ -28,7 +28,7 @@ import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
-    private PlayerPositioner positioner = new PlayerPositioner();
+    private PlayerPositioner positioner;
     private SpriteBatch batch;
     public static Assets assets;
     private StateManager states;
@@ -38,6 +38,7 @@ public class GameServer extends ApplicationAdapter
     @Override
     public void create()
     {
+        positioner  = new PlayerPositioner();
         server = initializeServer();
         assets = new Assets();
         batch = new SpriteBatch();
