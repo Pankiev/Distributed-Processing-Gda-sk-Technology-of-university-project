@@ -1,12 +1,12 @@
 package pl.gda.pg.student.project.client.objects;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 
 public class ClientObjectsIdentifier
 {
-    private static Map<Class<?>, String> identifiers = new TreeMap<>();
+	private static Map<Class<?>, String> identifiers = new HashMap<>();
 
     static
     {

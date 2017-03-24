@@ -1,5 +1,7 @@
 package pl.gda.pg.student.project.libgdxcommon.objects;
 
+import java.util.Collection;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -7,9 +9,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import pl.gda.pg.student.project.libgdxcommon.State;
 
-import java.util.Collection;
+import pl.gda.pg.student.project.libgdxcommon.State;
 
 public abstract class GameObject extends Actor
 {
@@ -40,7 +41,9 @@ public abstract class GameObject extends Actor
 
     public boolean isColliding(Rectangle rectangle)
     {
-        return this.rectangle.overlaps(rectangle);
+		Rectangle modifiedCopy = new Rectangle(rectangle);
+		modifiedCopy.set(modifiedCopy.x + 1, modifiedCopy.y + 1, modifiedCopy.width - 2, modifiedCopy.height - 2);
+		return this.rectangle.overlaps(modifiedCopy);
     }
 
     protected GameObject checkForCollision(Collection<GameObject> possibleCollision)

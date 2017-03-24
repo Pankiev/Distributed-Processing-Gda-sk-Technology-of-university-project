@@ -1,14 +1,20 @@
 package pl.gda.pg.student.project.server;
 
+import java.io.IOException;
+import java.util.Map;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
+
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
+import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
@@ -17,14 +23,15 @@ import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
-import pl.gda.pg.student.project.packets.movement.*;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
+import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
 import pl.gda.pg.student.project.server.objects.ServerPlayer;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
-
-import java.io.IOException;
-import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
@@ -50,6 +57,9 @@ public class GameServer extends ApplicationAdapter
     private Server initializeServer()
     {
         Server server = new Server();
+		Kryo serverKryo = server.getKryo();
+		serverKryo = PacketsRegisterer.registerAllAnnotated(serverKryo);
+		serverKryo = PacketsRegisterer.registerDefaults(serverKryo);
         server.addListener(new ServerListener());
         server.start();
         tryBindingServer(server, ConnectionSettings.TCP_PORT, ConnectionSettings.UDP_PORT);
@@ -98,14 +108,6 @@ public class GameServer extends ApplicationAdapter
         sendPositionUpdateInfoToNewClient(clientId, playerPosition);
     }
 
-    private void addPlayerObjectOnServer(int clientId, Vector2 playerPosition)
-    {
-        ServerPlayer newPlayer = new ServerPlayer(gameState);
-        newPlayer.setId(clientId);
-        newPlayer.setPosition(playerPosition.x, playerPosition.y);
-        gameState.add(newPlayer);
-    }
-
     private void sendGameStateInfo(int clientId)
     {
         Map<Long, GameObject> gameObjects = gameState.getGameObjects();
@@ -120,8 +122,16 @@ public class GameServer extends ApplicationAdapter
         createObjectPacket.xPosition = object.getX();
         createObjectPacket.yPosition = object.getY();
         createObjectPacket.objectType = ObjectsIdentifier.getObjectIdentifier(object.getClass());
-        server.sendToAllTCP(createObjectPacket);
+		server.sendToTCP(targetClientId, createObjectPacket);
     }
+
+	private void addPlayerObjectOnServer(int clientId, Vector2 playerPosition)
+	{
+		ServerPlayer newPlayer = new ServerPlayer(gameState);
+		newPlayer.setId(clientId);
+		newPlayer.setPosition(playerPosition.x, playerPosition.y);
+		gameState.add(newPlayer);
+	}
 
     private void informOthersAboutNewPlayer(int id, Vector2 playerPosition)
     {
@@ -139,14 +149,15 @@ public class GameServer extends ApplicationAdapter
         setPositionPacket.id = clientId; 
         setPositionPacket.x = playerPosition.x;
         setPositionPacket.y = playerPosition.y;
-        server.sendToAllExceptTCP(clientId, setPositionPacket);
+		server.sendToTCP(clientId, setPositionPacket);
     }
 
     private void userDisconnected(long id)
     {
         RemoveObjectInfo removeObjectInfo = new RemoveObjectInfo();
         removeObjectInfo.id = id;
-        server.sendToAllTCP(removeObjectInfo);
+		server.sendToAllTCP(removeObjectInfo);
+		gameState.remove(id);
     }
 
     private static class CannotBindServerException extends GameException
@@ -160,7 +171,6 @@ public class GameServer extends ApplicationAdapter
     
     private class ServerListener extends Listener
     {
-
         @Override
         public void connected(Connection connection)
         {

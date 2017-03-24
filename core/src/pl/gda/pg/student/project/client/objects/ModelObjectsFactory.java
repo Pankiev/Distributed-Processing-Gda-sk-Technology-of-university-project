@@ -12,10 +12,11 @@ public class ModelObjectsFactory
             return new ModelPlayer(position);
         else if(identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelWall.class)))
             return new ModelWall(position);
+		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBox.class)))
+			return new ModelBox(position);
         
         throw new ObjectIdentifierNotFoundException();
     }
-    
     
     private static class ObjectIdentifierNotFoundException extends GameException
     {  

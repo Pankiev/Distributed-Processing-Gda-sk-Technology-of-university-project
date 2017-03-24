@@ -1,8 +1,8 @@
 package pl.gda.pg.student.project.server.objects;
 
-import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-
 import java.util.Map;
+
+import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 
 public interface GameObjectsContainer
 {
@@ -12,5 +12,7 @@ public interface GameObjectsContainer
     
     void remove(GameObject object);
     
+	void remove(long id);
+
     Map<Long, GameObject> getGameObjects();
 }

@@ -1,21 +1,23 @@
 package pl.gda.pg.student.project.client.states;
 
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
+
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
-
 public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {
-    private Map<Long, ConnectionModelObject> gameObjects = Collections.synchronizedMap(new TreeMap<>());
+	private Map<Long, ConnectionModelObject> gameObjects = Collections.synchronizedMap(new HashMap<>());
     private ModelPlayer player;
     private PlayInputHandler inputHandler;
     private Client client;
@@ -33,8 +35,11 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     @Override
     public void render(SpriteBatch batch)
     {
-        for(ConnectionModelObject object : gameObjects.values())
-            object.render(batch);
+		synchronized (gameObjects)
+		{
+			for (Entry<Long, ConnectionModelObject> object : gameObjects.entrySet())
+				object.getValue().render(batch);
+		}
     }
 
     @Override
