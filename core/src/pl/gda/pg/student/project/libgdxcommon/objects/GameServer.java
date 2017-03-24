@@ -1,4 +1,4 @@
-package pl.gda.pg.student.project.server;
+package pl.gda.pg.student.project.libgdxcommon.objects;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -12,8 +12,6 @@ import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
-import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;

@@ -3,7 +3,7 @@ package pl.gda.pg.student.project.server.objects;
 import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.libgdxcommon.objects.GameServer;
 
 public class Wall extends GameObject {
 
@@ -21,6 +21,6 @@ public class Wall extends GameObject {
 
     @Override
     public String getIdentifier() {
-        return "ModelWall";
+        return ObjectsIdentifier.getObjectIdentifier(Wall.class);
     }
 }
