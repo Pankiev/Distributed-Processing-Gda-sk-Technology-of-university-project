@@ -16,10 +16,11 @@ public class ConnectionState extends State implements TextInputListener
 {
     private BitmapFont font = GameClient.assets.getFont();
     private String messageForUser = "Input adress ip";
-    private Client client = new Client();
+    private Client client;
     
     public ConnectionState(Client client)
     {
+        this.client = client;
         font.setColor(new Color(1, 0, 0, 0.8f));
         askForIp();
     }
@@ -44,8 +45,10 @@ public class ConnectionState extends State implements TextInputListener
     public void input(String ip)
     {
         tryConnecting(ip);
+        ClientPlayState clientPlayState = new ClientPlayState(client);
         if(client.isConnected())
-            GameClient.states.set(new ClientPlayState(client));
+            GameClient.states.set(clientPlayState);
+        GameClient.setPlayState(clientPlayState);
     }
 
     private void tryConnecting(String ip)

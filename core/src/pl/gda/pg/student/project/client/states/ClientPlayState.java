@@ -60,4 +60,9 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
         return gameObjects;
     }
 
+    @Override
+    public ConnectionModelObject getGameObjectById(long id){
+        return gameObjects.get(id);
+    }
+
 }
