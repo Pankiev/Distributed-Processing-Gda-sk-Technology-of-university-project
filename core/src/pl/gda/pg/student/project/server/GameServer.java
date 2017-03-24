@@ -127,8 +127,11 @@ public class GameServer extends ApplicationAdapter
     
     private void sendPositionUpdateInfoToNewClient(int clientId, Vector2 playerPosition)
     {
-        
-        
+        ObjectSetPositionPacket setPositionPacket = new ObjectSetPositionPacket();
+        setPositionPacket.id = clientId; 
+        setPositionPacket.x = playerPosition.x;
+        setPositionPacket.y = playerPosition.y;
+        server.sendToAllExceptTCP(clientId, setPositionPacket);
     }
 
     private void userDisconnected(long id){
