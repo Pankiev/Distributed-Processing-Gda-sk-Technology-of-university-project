@@ -29,6 +29,10 @@ public abstract class ConnectionModelObject {
         this.id = id;
     }
 
+    public long getId(){
+        return id;
+    }
+
     public void setTexture(Texture texture){
         sprite.setTexture(texture);
     }
