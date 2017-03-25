@@ -24,15 +24,14 @@ public class ServerPlayState extends State implements GameObjectsContainer
     public void render(SpriteBatch batch)
     {
         for (GameObject object : objects.values())
-        {
             object.render(batch);
-        }
     }
 
     @Override
     public void update()
     {
-
+		for (GameObject object : objects.values())
+			object.update();
     }
 
     @Override
