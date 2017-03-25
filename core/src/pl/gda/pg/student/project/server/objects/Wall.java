@@ -9,7 +9,7 @@ public class Wall extends GameObject {
 
 
     public Wall(State linkedState, Vector2 position) {
-        super(GameServer.assets.get("filar.bmp"), linkedState);
+        super(GameServer.assets.get("filar.png"), linkedState);
         super.setX(position.x);
         super.setY(position.y);
     }
