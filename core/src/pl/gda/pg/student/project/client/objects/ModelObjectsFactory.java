@@ -18,6 +18,8 @@ public class ModelObjectsFactory
 			return new ModelBomb(position);
 		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelExplosion.class)))
 			return new ModelExplosion(position);
+		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelExplosion.class)))
+			return new ModelRangePowerUp(position);
         
 		throw new ObjectIdentifierNotFoundException(identifier);
     }
