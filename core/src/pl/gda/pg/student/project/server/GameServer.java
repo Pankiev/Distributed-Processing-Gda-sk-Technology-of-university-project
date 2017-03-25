@@ -232,13 +232,15 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
-                    Bomb bomb = new Bomb(gameState, new Vector2(player.getX(), player.getY()), player);
+				    float bombPositionX = player.getX() - player.getX()%27;
+                    float bombPositionY = player.getY() - player.getY()%27;
+                    Bomb bomb = new Bomb(gameState, new Vector2(bombPositionX, bombPositionY), player);
                     long id = IdSupplier.getId();
                     bomb.setId(id);
                     gameState.add(bomb);
                     CreateObjectPacket createObjectPacket = new CreateObjectPacket();
-                    createObjectPacket.xPosition = player.getX();
-                    createObjectPacket.yPosition = player.getY();
+                    createObjectPacket.xPosition = bombPositionX;
+                    createObjectPacket.yPosition = bombPositionY;
                     createObjectPacket.id = id;
                     createObjectPacket.objectType = "Bomb";
                     server.sendToAllTCP(createObjectPacket);

@@ -10,7 +10,7 @@ public class Bomb extends GameObject
     private ServerPlayer player;
 
     public Bomb(State linkedState, Vector2 position, ServerPlayer serverPlayer) {
-        super(GameServer.assets.get("skrzynka.bmp"), linkedState);
+        super(GameServer.assets.get("bomba.png"), linkedState);
         super.setX(position.x);
         super.setY(position.y);
         this.player = serverPlayer;
