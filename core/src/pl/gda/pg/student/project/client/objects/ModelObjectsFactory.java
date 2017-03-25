@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import pl.gda.pg.student.project.client.objects.powerUps.ModelNumberOfBombsPowerUp;
 import pl.gda.pg.student.project.client.objects.powerUps.ModelRangePowerUp;
+import pl.gda.pg.student.project.client.objects.powerUps.ModelSpeedUpPowerUp;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 
 public class ModelObjectsFactory
@@ -24,6 +25,8 @@ public class ModelObjectsFactory
 			return new ModelRangePowerUp(position);
 		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelNumberOfBombsPowerUp.class)))
 			return new ModelNumberOfBombsPowerUp(position);
+		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelSpeedUpPowerUp.class)))
+			return new ModelSpeedUpPowerUp(position);
         
 		throw new ObjectIdentifierNotFoundException(identifier);
     }

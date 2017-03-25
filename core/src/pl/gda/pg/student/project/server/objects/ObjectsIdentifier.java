@@ -2,6 +2,7 @@ package pl.gda.pg.student.project.server.objects;
 
 import pl.gda.pg.student.project.server.objects.powerUps.NumberOfBombsPowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.RangePowerUp;
+import pl.gda.pg.student.project.server.objects.powerUps.SpeedUpPowerUp;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class ObjectsIdentifier
 		identifiers.put(Explosion.class, "Explosion");
         identifiers.put(NumberOfBombsPowerUp.class, "NumberOfBombsPowerUp");
         identifiers.put(RangePowerUp.class, "RangePowerUp");
+        identifiers.put(SpeedUpPowerUp.class, "SpeedUpPowerUp");
     }
     
     public static String getObjectIdentifier(Class<?> type)

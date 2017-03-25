@@ -1,8 +1,5 @@
 package pl.gda.pg.student.project.server;
 
-import java.io.IOException;
-import java.util.Map;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +9,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
@@ -25,18 +21,16 @@ import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
 import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
-import pl.gda.pg.student.project.packets.movement.Direction;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+import pl.gda.pg.student.project.packets.movement.*;
 import pl.gda.pg.student.project.server.helpers.BombLegalPositionFinder;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
 import pl.gda.pg.student.project.server.objects.Bomb;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
 import pl.gda.pg.student.project.server.objects.ServerPlayer;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
+
+import java.io.IOException;
+import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
@@ -244,6 +238,7 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
+				    player.placeBomb();
                     BombLegalPositionFinder bombLegalPositioninder = new BombLegalPositionFinder();
 				    Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(player.getX(), player.getY()));
                     Bomb bomb = new Bomb(gameState, bombPosition, player);

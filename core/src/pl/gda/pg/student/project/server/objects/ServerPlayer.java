@@ -26,10 +26,13 @@ public class ServerPlayer extends MovableGameObject
 
     public boolean canPlaceBomb(){
         if(numberOfPlacedBombs < maximumNumberOfPlacedBombs) {
-            numberOfPlacedBombs++;
             return true;
         }
         return false;
+    }
+
+    public void placeBomb(){
+        numberOfPlacedBombs++;
     }
 
 	private void increaseRange()
