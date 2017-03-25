@@ -3,6 +3,8 @@ package pl.gda.pg.student.project.client.objects;
 import java.util.HashMap;
 import java.util.Map;
 
+import pl.gda.pg.student.project.server.objects.RangePowerUp;
+
 
 public class ClientObjectsIdentifier
 {
@@ -12,9 +14,10 @@ public class ClientObjectsIdentifier
     {
         identifiers.put(ModelPlayer.class, "Player");
         identifiers.put(ModelWall.class, "Wall");
-        identifiers.put(ModelBox.class, "PowerUp");
+		identifiers.put(ModelBox.class, "Box");
 		identifiers.put(ModelBomb.class, "Bomb");
 		identifiers.put(ModelExplosion.class, "Explosion");
+		identifiers.put(RangePowerUp.class, "RangePowerUp");
     }
 
     public static String getObjectIdentifier(Class<?> type)
