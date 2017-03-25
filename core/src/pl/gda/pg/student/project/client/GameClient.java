@@ -1,5 +1,8 @@
 package pl.gda.pg.student.project.client;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,8 +12,10 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ModelObjectsFactory;
+import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.client.states.ClientPlayState;
 import pl.gda.pg.student.project.client.states.ConnectionState;
 import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
@@ -19,10 +24,8 @@ import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
+import pl.gda.pg.student.project.packets.movement.Direction;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class GameClient extends ApplicationAdapter
 {
@@ -82,6 +85,8 @@ public class GameClient extends ApplicationAdapter
 		{
 			ObjectSetPositionPacket objectSetPositionPacket = (ObjectSetPositionPacket) object;
 			ConnectionModelObject connectionModelObject = playState.getGameObjectById(objectSetPositionPacket.id);
+			if (connectionModelObject instanceof ModelPlayer)
+				adjustTexture((ModelPlayer) connectionModelObject, objectSetPositionPacket.direction);
 			connectionModelObject.positionUpdate(new Vector2(objectSetPositionPacket.x, objectSetPositionPacket.y));
 		} else if (object instanceof CreateObjectPacket)
 		{
@@ -94,6 +99,21 @@ public class GameClient extends ApplicationAdapter
 		{
 			RemoveObjectInfo removeObjectInfo = (RemoveObjectInfo) object;
 			playState.remove(removeObjectInfo.id);
+		}
+	}
+
+	private static void adjustTexture(ModelPlayer player, String direction)
+	{
+		if (direction != null)
+		{
+			if (direction.equals(Direction.DOWN))
+				player.lookDown();
+			else if (direction.equals(Direction.UP))
+				player.lookUp();
+			else if (direction.equals(Direction.LEFT))
+				player.lookLeft();
+			else if (direction.equals(Direction.RIGHT))
+				player.lookRight();
 		}
 	}
 
