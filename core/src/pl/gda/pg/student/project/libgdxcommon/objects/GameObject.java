@@ -34,12 +34,17 @@ public abstract class GameObject extends Actor
 
     public abstract String getIdentifier();
 
-    private boolean isColliding(GameObject gameObject)
+	protected boolean isCollideable()
+	{
+		return true;
+	}
+
+	public boolean isColliding(GameObject gameObject)
     {
         return isColliding(gameObject.rectangle);
     }
 
-    public boolean isColliding(Rectangle rectangle)
+	private boolean isColliding(Rectangle rectangle)
     {
 		Rectangle modifiedCopy = new Rectangle(rectangle);
 		modifiedCopy.set(modifiedCopy.x + 1, modifiedCopy.y + 1, modifiedCopy.width - 2, modifiedCopy.height - 2);
@@ -49,7 +54,7 @@ public abstract class GameObject extends Actor
     protected GameObject checkForCollision(Collection<GameObject> possibleCollision)
     {
         for (GameObject gameObject : possibleCollision)
-            if (isColliding(gameObject) && gameObject != this)
+			if (gameObject.isCollideable() && isColliding(gameObject) && gameObject != this)
                 return gameObject;
         return null;
     }
