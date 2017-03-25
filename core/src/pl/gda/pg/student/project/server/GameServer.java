@@ -168,15 +168,20 @@ public class GameServer extends ApplicationAdapter
 
     private Vector2 countBombLegalPosition(Vector2 playerPosition){
         Vector2 bombPosition = new Vector2();
-        int xFaze = (int)playerPosition.x%27;
-        int yFaze = (int)playerPosition.y%27;
-        if(xFaze > 27/2)
-            xFaze *= -1;
-        if(yFaze > 27/2)
-            yFaze *= -1;
-        float bombPositionX = (int)playerPosition.x - xFaze;
-        float bombPositionY = (int)playerPosition.y - yFaze;
+        int playerPositionX = (int)playerPosition.x;
+        int playerPositionY = (int)playerPosition.y;
+        int fazeX = playerPositionX%27;
+        int fazeY = playerPositionY%27;
+        int noOfTileX = playerPositionX/27;
+        int noOfTileY = playerPositionY/27;
+        if(fazeX > 27/2)
+            noOfTileX++;
+        if(fazeY > 27/2)
+            noOfTileY++;
+        float bombPositionX = noOfTileX*27;
+        float bombPositionY = noOfTileY*27;
         bombPosition.set(bombPositionX, bombPositionY);
+        System.out.println(bombPosition);
         return bombPosition;
     }
 
