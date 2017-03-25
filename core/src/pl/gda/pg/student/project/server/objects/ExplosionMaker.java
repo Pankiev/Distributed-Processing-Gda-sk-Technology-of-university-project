@@ -49,18 +49,14 @@ public class ExplosionMaker
 		{
 			Vector2 explosionPosition = bombPosition.cpy().add(translation);
 			GameObject collision = isColliding(explosionPosition);
-			if (collision == null)
+			if (collision == null || collision instanceof PowerUp)
 			{
 				Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
 				explosion.setId(IdSupplier.getId());
 				explosion.setPosition(explosionPosition.x, explosionPosition.y);
 				explosionChunks.add(explosion);
-			} else if(collision instanceof PowerUp){
-				Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
-				explosion.setId(IdSupplier.getId());
-				explosion.setPosition(explosionPosition.x, explosionPosition.y);
-				explosionChunks.add(explosion);
-				((PowerUp) collision).deleteItself();
+				if(collision != null)
+					((PowerUp) collision).deleteItself();
 			}
 			else
 			{
