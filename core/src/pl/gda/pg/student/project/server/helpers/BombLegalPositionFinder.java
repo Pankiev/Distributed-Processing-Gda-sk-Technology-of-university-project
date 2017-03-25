@@ -3,7 +3,7 @@ package pl.gda.pg.student.project.server.helpers;
 
 import com.badlogic.gdx.math.Vector2;
 
-public class BombLegalPositioninder {
+public class BombLegalPositionFinder {
     private final static int TILE_SIZE = 27;
 
     public Vector2 countBombLegalPosition(Vector2 playerPosition){

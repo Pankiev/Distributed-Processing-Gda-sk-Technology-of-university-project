@@ -22,7 +22,7 @@ import pl.gda.pg.student.project.packets.DisconnectPacket;
 import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.*;
-import pl.gda.pg.student.project.server.helpers.BombLegalPositioninder;
+import pl.gda.pg.student.project.server.helpers.BombLegalPositionFinder;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
 import pl.gda.pg.student.project.server.objects.Bomb;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
@@ -168,7 +168,9 @@ public class GameServer extends ApplicationAdapter
             super(message);
         }
     }
-    
+
+
+
     private class ServerListener extends Listener
     {
         @Override
@@ -234,7 +236,7 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
-                    BombLegalPositioninder bombLegalPositioninder = new BombLegalPositioninder();
+                    BombLegalPositionFinder bombLegalPositioninder = new BombLegalPositionFinder();
 				    Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(player.getX(), player.getY()));
                     Bomb bomb = new Bomb(gameState, bombPosition, player);
                     long id = IdSupplier.getId();

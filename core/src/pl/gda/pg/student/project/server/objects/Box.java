@@ -23,4 +23,5 @@ public class Box extends GameObject {
     public String getIdentifier() {
         return ObjectsIdentifier.getObjectIdentifier(Box.class);
     }
+
 }
