@@ -5,18 +5,22 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.kryonet.Server;
 
+import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.server.helpers.FieldInitializer;
 import pl.gda.pg.student.project.server.objects.GameObjectsContainer;
 
-public class ServerPlayState extends State implements GameObjectsContainer
+public class ServerPlayState extends State implements GameObjectsContainer, PacketsSender
 {
 	private Map<Long, GameObject> objects = new ConcurrentHashMap<>();
+	private Server server;
 
-    public ServerPlayState()
+	public ServerPlayState(Server server)
     {
+		this.server = server;
 		objects.putAll(FieldInitializer.initializeField(this));
     }
 
@@ -68,5 +72,11 @@ public class ServerPlayState extends State implements GameObjectsContainer
 	public void remove(long id)
 	{
 		objects.remove(id);
+	}
+
+	@Override
+	public void send(Object packet)
+	{
+		server.sendToAllTCP(packet);
 	}
 }
