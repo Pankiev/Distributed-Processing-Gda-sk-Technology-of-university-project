@@ -1,12 +1,17 @@
 package pl.gda.pg.student.project.kryonetcommon;
 
-import com.badlogic.gdx.math.Vector2;
-import com.esotericsoftware.kryo.Kryo;
-import org.reflections.Reflections;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+
+import org.reflections.Reflections;
+
+import com.badlogic.gdx.math.Vector2;
+import com.esotericsoftware.kryo.Kryo;
 
 public class PacketsRegisterer
 {
@@ -28,7 +33,7 @@ public class PacketsRegisterer
 
     private static String getUsedPackageName()
     {
-        return "pl.gda.pg.student.project";
+		return "pl.gda.pg.student.project.packets";
     }
 
     public static Kryo registerAllAnnotated(Kryo destination, Class<? extends Annotation> annotationType,
