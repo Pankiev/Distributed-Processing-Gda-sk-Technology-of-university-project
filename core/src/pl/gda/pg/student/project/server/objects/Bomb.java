@@ -1,12 +1,12 @@
 package pl.gda.pg.student.project.server.objects;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
@@ -63,8 +63,18 @@ public class Bomb extends GameObject
 			((GameObjectsContainer) linkedState).add(explosion);
 			sendExplosionCreationInfo(explosion);
 		}
+
+		Collection<GameObject> explosionColliders = explosionMaker.getExplosionColliders();
+		for (GameObject explosionCollider : explosionColliders)
+			handle(explosionCollider);
 		deleteItself();
 		player.bombExploded();
+	}
+
+	private void handle(GameObject explosionCollider)
+	{
+		if (explosionCollider instanceof Box)
+			((Box) explosionCollider).destroyedByBomb();
 	}
 
 	private void deleteItself()
@@ -79,7 +89,7 @@ public class Bomb extends GameObject
 	{
 		CreateObjectPacket createExplosion = new CreateObjectPacket();
 		createExplosion.objectType = explosion.getIdentifier();
-		createExplosion.id = IdSupplier.getId();
+		createExplosion.id = explosion.getId();
 		createExplosion.xPosition = explosion.getX();
 		createExplosion.yPosition = explosion.getY();
 		((PacketsSender) linkedState).send(createExplosion);
