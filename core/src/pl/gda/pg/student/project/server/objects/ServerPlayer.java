@@ -1,15 +1,14 @@
 package pl.gda.pg.student.project.server.objects;
 
+import java.util.Collections;
+import java.util.List;
+
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.server.GameServer;
 
-import java.util.Collections;
-import java.util.List;
-
 public class ServerPlayer extends MovableGameObject
 {
-
     private int maximumNumberOfPlacedBombs;
     private int numberOfPlacedBombs;
     private List<Long> bombsId = Collections.emptyList();

@@ -13,6 +13,8 @@ public class ObjectsIdentifier
         identifiers.put(ServerPlayer.class, "Player");
         identifiers.put(Wall.class, "Wall");
 		identifiers.put(Box.class, "Box");
+		identifiers.put(Bomb.class, "Bomb");
+		identifiers.put(Explosion.class, "Explosion");
     }
     
     public static String getObjectIdentifier(Class<?> type)
