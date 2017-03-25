@@ -23,6 +23,9 @@ public class ModelPlayer extends ConnectionModelObject
         super(GameClient.assets.get("pacman_dol.png"), position);
     }
 
+    @Override
+    public void updatePosition
+
     public void lookUp()
     {
         super.setTexture(up);
