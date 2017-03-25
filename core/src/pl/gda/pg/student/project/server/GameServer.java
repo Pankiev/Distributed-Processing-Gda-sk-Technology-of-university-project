@@ -234,8 +234,15 @@ public class GameServer extends ApplicationAdapter
 				player.placeBomb(IdSupplier.getId());
 				if(player.canPlaceBomb()){
                     Bomb bomb = new Bomb(gameState, new Vector2(player.getX(), player.getY()), player);
-                    bomb.setId(IdSupplier.getId());
+                    long id = IdSupplier.getId();
+                    bomb.setId(id);
                     gameState.add(bomb);
+                    CreateObjectPacket createObjectPacket = new CreateObjectPacket();
+                    createObjectPacket.xPosition = player.getX();
+                    createObjectPacket.yPosition = player.getY();
+                    createObjectPacket.id = id;
+                    createObjectPacket.objectType = "Bomb";
+                    server.sendToAllTCP(createObjectPacket);
                 }
 			}
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
