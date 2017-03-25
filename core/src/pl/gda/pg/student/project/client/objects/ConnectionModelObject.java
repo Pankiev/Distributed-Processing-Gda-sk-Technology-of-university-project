@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class ConnectionModelObject {
     private long id;
-    private Sprite sprite;
+    protected Sprite sprite;
 
     public ConnectionModelObject(Texture lookout, Vector2 position)
     {

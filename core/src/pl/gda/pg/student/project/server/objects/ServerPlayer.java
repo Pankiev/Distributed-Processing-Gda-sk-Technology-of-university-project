@@ -13,12 +13,14 @@ public class ServerPlayer extends MovableGameObject
     private int maximumNumberOfPlacedBombs;
     private int numberOfPlacedBombs;
     private List<Long> bombsId = Collections.emptyList();
+    private int rangeOfExplosion;
 
     public ServerPlayer(State linkedState)
     {
         super(GameServer.assets.get("pacman_dol.png"), linkedState);
         maximumNumberOfPlacedBombs = 1;
         numberOfPlacedBombs = 0;
+        rangeOfExplosion = 1;
     }
 
     public boolean tryPlaceBomb(){
@@ -35,6 +37,10 @@ public class ServerPlayer extends MovableGameObject
 
     public void removeBomb(long id){
         bombsId.remove(id);
+    }
+
+    public void increaseRange(){
+        rangeOfExplosion++;
     }
 
     @Override
