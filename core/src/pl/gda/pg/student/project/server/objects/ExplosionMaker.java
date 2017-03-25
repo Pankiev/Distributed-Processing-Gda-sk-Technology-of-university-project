@@ -32,6 +32,7 @@ public class ExplosionMaker
 		Explosion centerExplosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
 		centerExplosion.setId(IdSupplier.getId());
 		centerExplosion.setPosition(bombPosition.x, bombPosition.y);
+		explosionChunks.add(centerExplosion);
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(-TILE_SIZE, 0)));
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(TILE_SIZE, 0)));
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(0, -TILE_SIZE)));
@@ -61,7 +62,7 @@ public class ExplosionMaker
 
 	private boolean isColliding(Vector2 point)
 	{
-		Rectangle rectangle = new Rectangle(point.x, point.y, 1, 1);
+		Rectangle rectangle = new Rectangle(point.x, point.y, 2, 2);
 		for (GameObject collisionObject : collisionObjects)
 			if (collisionObject.isColliding(rectangle))
 				return true;
