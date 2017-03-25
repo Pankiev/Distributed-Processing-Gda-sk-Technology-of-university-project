@@ -1,6 +1,7 @@
 package pl.gda.pg.student.project.server.helpers;
 
 import com.badlogic.gdx.math.Vector2;
+import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.server.objects.powerUps.NumberOfBombsPowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
@@ -19,6 +20,7 @@ public class RandomPowerUp {
         }else{
             powerUp = new RangePowerUp(state, boxPosition);
         }
+        powerUp.setId(IdSupplier.getId());
 
         return powerUp;
     }

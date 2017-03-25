@@ -1,18 +1,17 @@
 package pl.gda.pg.student.project.server.objects;
 
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.server.GameServer;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class Bomb extends GameObject
 {
