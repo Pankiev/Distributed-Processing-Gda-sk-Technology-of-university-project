@@ -64,6 +64,7 @@ public class Bomb extends GameObject
 			sendExplosionCreationInfo(explosion);
 		}
 		deleteItself();
+		player.bombExploded();
 	}
 
 	private void deleteItself()

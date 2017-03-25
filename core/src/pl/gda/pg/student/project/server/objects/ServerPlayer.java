@@ -36,6 +36,11 @@ public class ServerPlayer extends MovableGameObject
 		return rangeOfExplosion;
 	}
 
+	public void bombExploded()
+	{
+		numberOfPlacedBombs--;
+	}
+
     @Override
     public void update()
     {
