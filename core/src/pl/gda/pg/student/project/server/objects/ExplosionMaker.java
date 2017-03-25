@@ -1,16 +1,16 @@
 package pl.gda.pg.student.project.server.objects;
 
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
+
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ExplosionMaker
 {
@@ -55,7 +55,14 @@ public class ExplosionMaker
 				explosion.setId(IdSupplier.getId());
 				explosion.setPosition(explosionPosition.x, explosionPosition.y);
 				explosionChunks.add(explosion);
-			} else
+			} else if(collision instanceof PowerUp){
+				Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
+				explosion.setId(IdSupplier.getId());
+				explosion.setPosition(explosionPosition.x, explosionPosition.y);
+				explosionChunks.add(explosion);
+				((PowerUp) collision).deleteItself();
+			}
+			else
 			{
 				explosionColliders.add(collision);
 				return explosionChunks;

@@ -12,7 +12,6 @@ import pl.gda.pg.student.project.server.objects.GameObjectsContainer;
 public abstract class PowerUp extends GameObject
 {
 
-
     protected PowerUp(Texture lookout, State linkedState) {
         super(lookout, linkedState);
     }
