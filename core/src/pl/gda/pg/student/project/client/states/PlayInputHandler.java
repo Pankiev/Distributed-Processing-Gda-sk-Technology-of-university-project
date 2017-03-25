@@ -30,6 +30,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveUpPacket moveUpPacket = new ObjectMoveUpPacket();
             moveUpPacket.id = playerObject.getId();
             connection.sendTCP(moveUpPacket);
+			playerObject.lookUp();
         }
     }
 
@@ -41,6 +42,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveDownPacket moveDownPacket = new ObjectMoveDownPacket();
             moveDownPacket.id = playerObject.getId();
             connection.sendTCP(moveDownPacket);
+			playerObject.lookDown();
         }
     }
 
@@ -52,6 +54,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveLeftPacket moveLeftPacket = new ObjectMoveLeftPacket();
             moveLeftPacket.id = playerObject.getId();
             connection.sendTCP(moveLeftPacket);
+			playerObject.lookLeft();
         }
 
     }
@@ -64,6 +67,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveRightPacket moveRightPacket = new ObjectMoveRightPacket();
             moveRightPacket.id = playerObject.getId();
             connection.sendTCP(moveRightPacket);
+			playerObject.lookRight();
         }
     }
 
