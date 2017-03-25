@@ -1,8 +1,12 @@
 package pl.gda.pg.student.project.server.objects;
 
 import com.badlogic.gdx.math.Vector2;
+
+import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
+import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.server.GameServer;
 
 public class Box extends GameObject {
@@ -15,13 +19,41 @@ public class Box extends GameObject {
     }
 
     @Override
-    public void update() {
+	public void update()
+	{
 
     }
 
     @Override
-    public String getIdentifier() {
+	public String getIdentifier()
+	{
         return ObjectsIdentifier.getObjectIdentifier(Box.class);
     }
 
+	public void destroyedByBomb()
+	{
+		GameObject powerUp = randomPowerUp();
+		CreateObjectPacket powerUpCreationPacket = new CreateObjectPacket();
+		powerUpCreationPacket.id = powerUp.getId();
+		powerUpCreationPacket.objectType = powerUp.getIdentifier();
+		powerUpCreationPacket.xPosition = powerUp.getX();
+		powerUpCreationPacket.yPosition = powerUp.getY();
+		((PacketsSender) linkedState).send(powerUpCreationPacket);
+		((GameObjectsContainer) linkedState).add((powerUp);
+		deleteItself();
+	}
+
+	private GameObject randomPowerUp()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void deleteItself()
+	{
+		RemoveObjectInfo deleteItselfPacket = new RemoveObjectInfo();
+		deleteItselfPacket.id = this.getId();
+		((PacketsSender) linkedState).send(deleteItselfPacket);
+		((GameObjectsContainer) linkedState).remove(this.getId());
+	}
 }

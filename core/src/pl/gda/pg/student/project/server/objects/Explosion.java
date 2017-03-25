@@ -21,7 +21,6 @@ public class Explosion extends GameObject
 	public void update()
 	{
 		handleLivingTime();
-
 	}
 
 	private void handleLivingTime()

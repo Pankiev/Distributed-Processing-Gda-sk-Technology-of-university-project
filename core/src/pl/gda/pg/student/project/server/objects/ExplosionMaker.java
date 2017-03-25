@@ -18,6 +18,7 @@ public class ExplosionMaker
 	private Collection<GameObject> collisionObjects;
 	private Vector2 bombPosition;
 	private State linkedState;
+	private Collection<GameObject> explosionColliders = new LinkedList<>();
 
 	public ExplosionMaker(Collection<GameObject> collisionObjects, Vector2 bombPosition, State linkedState)
 	{
@@ -47,25 +48,34 @@ public class ExplosionMaker
 		for (int i = 0; i < explosionRange; i++)
 		{
 			Vector2 explosionPosition = bombPosition.cpy().add(translation);
-			if (!isColliding(explosionPosition))
+			GameObject collision = isColliding(explosionPosition);
+			if (collision == null)
 			{
 				Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
 				explosion.setId(IdSupplier.getId());
 				explosion.setPosition(explosionPosition.x, explosionPosition.y);
 				explosionChunks.add(explosion);
 			} else
+			{
+				explosionColliders.add(collision);
 				return explosionChunks;
+			}
 			translation.add(translationChunk);
 		}
 		return explosionChunks;
 	}
 
-	private boolean isColliding(Vector2 point)
+	public Collection<GameObject> getExplosionColliders()
+	{
+		return explosionColliders;
+	}
+
+	private GameObject isColliding(Vector2 point)
 	{
 		Rectangle rectangle = new Rectangle(point.x, point.y, 2, 2);
 		for (GameObject collisionObject : collisionObjects)
 			if (collisionObject.isColliding(rectangle))
-				return true;
-		return false;
+				return collisionObject;
+		return null;
 	}
 }
