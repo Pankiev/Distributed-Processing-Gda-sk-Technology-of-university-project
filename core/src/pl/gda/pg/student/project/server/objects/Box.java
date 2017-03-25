@@ -1,16 +1,15 @@
 package pl.gda.pg.student.project.server.objects;
 
 import com.badlogic.gdx.math.Vector2;
-
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.server.helpers.RandomPowerUp;
 
 public class Box extends GameObject {
-
 
     public Box(State linkedState, Vector2 position) {
         super(GameServer.assets.get("skrzynka.bmp"), linkedState);
@@ -39,14 +38,14 @@ public class Box extends GameObject {
 		powerUpCreationPacket.xPosition = powerUp.getX();
 		powerUpCreationPacket.yPosition = powerUp.getY();
 		((PacketsSender) linkedState).send(powerUpCreationPacket);
-		((GameObjectsContainer) linkedState).add((powerUp);
+		((GameObjectsContainer) linkedState).add((powerUp));
 		deleteItself();
 	}
 
 	private GameObject randomPowerUp()
 	{
-		// TODO Auto-generated method stub
-		return null;
+	    RandomPowerUp random = new RandomPowerUp();
+	    return random.getRandomPowerUp(linkedState, new Vector2(getX(), getY()));
 	}
 
 	private void deleteItself()
