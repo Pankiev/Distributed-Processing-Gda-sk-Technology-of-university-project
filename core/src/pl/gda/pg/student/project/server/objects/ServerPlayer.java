@@ -31,6 +31,10 @@ public class ServerPlayer extends MovableGameObject
         rangeOfExplosion++;
     }
 
+    public void increseMaximumNumberOfBombs(){
+        maximumNumberOfPlacedBombs++;
+    }
+
 	public int getRangeOfExplosion()
 	{
 		return rangeOfExplosion;
