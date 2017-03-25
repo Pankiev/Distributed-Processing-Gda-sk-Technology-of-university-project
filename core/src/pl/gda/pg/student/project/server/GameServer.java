@@ -14,6 +14,7 @@ import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
+import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
 import pl.gda.pg.student.project.libgdxcommon.Assets;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
@@ -234,7 +235,7 @@ public class GameServer extends ApplicationAdapter
 			{
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
-				//
+				player.placeBomb(IdSupplier.getId());
 			}
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
         }

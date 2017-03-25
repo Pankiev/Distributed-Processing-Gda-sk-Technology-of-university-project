@@ -13,6 +13,8 @@ public class ClientObjectsIdentifier
         identifiers.put(ModelPlayer.class, "Player");
         identifiers.put(ModelWall.class, "Wall");
         identifiers.put(ModelBox.class, "Box");
+		identifiers.put(ModelBomb.class, "Bomb");
+		identifiers.put(ModelExplosion.class, "Explosion");
     }
 
     public static String getObjectIdentifier(Class<?> type)

@@ -14,11 +14,19 @@ public class ModelObjectsFactory
             return new ModelWall(position);
 		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBox.class)))
 			return new ModelBox(position);
+		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBomb.class)))
+			return new ModelBomb(position);
+		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelExplosion.class)))
+			return new ModelExplosion(position);
         
-        throw new ObjectIdentifierNotFoundException();
+		throw new ObjectIdentifierNotFoundException(identifier);
     }
     
     private static class ObjectIdentifierNotFoundException extends GameException
     {  
+		public ObjectIdentifierNotFoundException(String identifier)
+		{
+			super("Identifier: " + identifier);
+		}
     }
 }
