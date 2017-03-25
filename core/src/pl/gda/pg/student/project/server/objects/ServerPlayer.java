@@ -23,7 +23,7 @@ public class ServerPlayer extends MovableGameObject
         rangeOfExplosion = 1;
     }
 
-    public boolean tryPlaceBomb(){
+    public boolean canPlaceBomb(){
         if(numberOfPlacedBombs < maximumNumberOfPlacedBombs) {
             numberOfPlacedBombs++;
             return true;

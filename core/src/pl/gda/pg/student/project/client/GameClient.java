@@ -1,8 +1,5 @@
 package pl.gda.pg.student.project.client;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +9,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ModelObjectsFactory;
 import pl.gda.pg.student.project.client.states.ClientPlayState;
@@ -24,6 +20,9 @@ import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameClient extends ApplicationAdapter
 {
