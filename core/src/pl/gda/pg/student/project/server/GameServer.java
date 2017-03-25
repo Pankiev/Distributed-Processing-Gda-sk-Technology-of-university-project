@@ -165,7 +165,21 @@ public class GameServer extends ApplicationAdapter
             super(message);
         }
     }
-    
+
+    private Vector2 countBombLegalPosition(Vector2 playerPosition){
+        Vector2 bombPosition = new Vector2();
+        int xFaze = (int)playerPosition.x%27;
+        int yFaze = (int)playerPosition.y%27;
+        if(xFaze > 27/2)
+            xFaze *= -1;
+        if(yFaze > 27/2)
+            yFaze *= -1;
+        float bombPositionX = (int)playerPosition.x - xFaze;
+        float bombPositionY = (int)playerPosition.y - yFaze;
+        bombPosition.set(bombPositionX, bombPositionY);
+        return bombPosition;
+    }
+
     
     private class ServerListener extends Listener
     {
@@ -232,15 +246,14 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
-				    float bombPositionX = player.getX() - player.getX()%27;
-                    float bombPositionY = player.getY() - player.getY()%27;
-                    Bomb bomb = new Bomb(gameState, new Vector2(bombPositionX, bombPositionY), player);
+				    Vector2 bombPosition = countBombLegalPosition(new Vector2(player.getX(), player.getY()));
+                    Bomb bomb = new Bomb(gameState, bombPosition, player);
                     long id = IdSupplier.getId();
                     bomb.setId(id);
                     gameState.add(bomb);
                     CreateObjectPacket createObjectPacket = new CreateObjectPacket();
-                    createObjectPacket.xPosition = bombPositionX;
-                    createObjectPacket.yPosition = bombPositionY;
+                    createObjectPacket.xPosition = bombPosition.x;
+                    createObjectPacket.yPosition = bombPosition.y;
                     createObjectPacket.id = id;
                     createObjectPacket.objectType = "Bomb";
                     server.sendToAllTCP(createObjectPacket);
