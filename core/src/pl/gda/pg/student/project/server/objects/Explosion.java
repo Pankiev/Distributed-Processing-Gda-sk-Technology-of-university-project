@@ -10,7 +10,7 @@ import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 
 public class Explosion extends GameObject
 {
-	private float livingTimeLeft = 2.0f;
+	private float livingTimeLeft = 0.5f;
 
 	protected Explosion(Texture lookout, State linkedState)
 	{

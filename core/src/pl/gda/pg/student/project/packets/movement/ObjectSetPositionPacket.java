@@ -8,4 +8,5 @@ public class ObjectSetPositionPacket
     public long id;
     public float x;
     public float y;
+	public String direction;
 }
