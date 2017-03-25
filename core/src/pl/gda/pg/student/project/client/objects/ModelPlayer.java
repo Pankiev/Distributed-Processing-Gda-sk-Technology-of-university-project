@@ -2,6 +2,7 @@ package pl.gda.pg.student.project.client.objects;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+
 import pl.gda.pg.student.project.client.GameClient;
 
 public class ModelPlayer extends ConnectionModelObject
@@ -13,7 +14,7 @@ public class ModelPlayer extends ConnectionModelObject
 
     public ModelPlayer()
     {
-        super(GameClient.assets.get("pacman_dol.bmp"), new Vector2(0, 0));
+		super(GameClient.assets.get("pacman_dol.png"), new Vector2(0, 0));
     }
 
     public ModelPlayer(Vector2 position)
