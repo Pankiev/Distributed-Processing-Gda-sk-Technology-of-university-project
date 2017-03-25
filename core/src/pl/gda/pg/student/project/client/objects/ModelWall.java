@@ -9,7 +9,7 @@ public class ModelWall extends ConnectionModelObject
 
 	public ModelWall(Vector2 position)
 	{
-		super(GameClient.assets.get("filar.png"), position);
+		super(GameClient.assets.get("filar.bmp"), position);
 	}
 
 }

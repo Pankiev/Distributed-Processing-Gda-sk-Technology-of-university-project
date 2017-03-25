@@ -9,7 +9,7 @@ public class Box extends GameObject {
 
 
     public Box(State linkedState, Vector2 position) {
-        super(GameServer.assets.get("skrzynka.png"), linkedState);
+        super(GameServer.assets.get("skrzynka.bmp"), linkedState);
         super.setX(position.x);
         super.setY(position.y);
     }

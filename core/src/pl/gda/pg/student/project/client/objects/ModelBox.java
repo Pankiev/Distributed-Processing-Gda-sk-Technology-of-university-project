@@ -8,6 +8,6 @@ public class ModelBox extends ConnectionModelObject
 {
 	public ModelBox(Vector2 vector)
 	{
-		super(GameClient.assets.get("skrzynka.png"), vector);
+		super(GameClient.assets.get("skrzynka.bmp"), vector);
 	}
 }
