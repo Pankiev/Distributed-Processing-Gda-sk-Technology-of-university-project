@@ -1,5 +1,8 @@
 package pl.gda.pg.student.project.server.objects;
 
+import pl.gda.pg.student.project.server.objects.powerUps.NumberOfBombsPowerUp;
+import pl.gda.pg.student.project.server.objects.powerUps.RangePowerUp;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,10 +15,11 @@ public class ObjectsIdentifier
     {
         identifiers.put(ServerPlayer.class, "Player");
         identifiers.put(Wall.class, "Wall");
-		identifiers.put(Box.class, "Box");
+		identifiers.put(Box.class, "PowerUp");
 		identifiers.put(Bomb.class, "Bomb");
 		identifiers.put(Explosion.class, "Explosion");
-		identifiers.put(RangePowerUp.class, "RangePowerUp");
+        identifiers.put(NumberOfBombsPowerUp.class, "NumberOfBombsPowerUp");
+        identifiers.put(RangePowerUp.class, "RangePowerUp");
     }
     
     public static String getObjectIdentifier(Class<?> type)
