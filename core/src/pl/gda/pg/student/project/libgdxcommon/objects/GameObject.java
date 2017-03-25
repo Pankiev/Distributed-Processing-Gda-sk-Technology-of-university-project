@@ -44,7 +44,7 @@ public abstract class GameObject extends Actor
         return isColliding(gameObject.rectangle);
     }
 
-	private boolean isColliding(Rectangle rectangle)
+	public boolean isColliding(Rectangle rectangle)
     {
 		Rectangle modifiedCopy = new Rectangle(rectangle);
 		modifiedCopy.set(modifiedCopy.x + 1, modifiedCopy.y + 1, modifiedCopy.width - 2, modifiedCopy.height - 2);

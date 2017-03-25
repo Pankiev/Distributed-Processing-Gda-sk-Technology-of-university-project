@@ -26,9 +26,15 @@ public class ServerPlayer extends MovableGameObject
         return false;
     }
 
-    public void increaseRange(){
+	public void increaseRange()
+	{
         rangeOfExplosion++;
     }
+
+	public int getRangeOfExplosion()
+	{
+		return rangeOfExplosion;
+	}
 
     @Override
     public void update()
