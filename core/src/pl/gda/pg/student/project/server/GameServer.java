@@ -261,9 +261,10 @@ public class GameServer extends ApplicationAdapter
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
         }
 
-		private ObjectSetPositionPacket createSetPositionPacket(GameObject object)
+		private ObjectSetPositionPacket createSetPositionPacket(GameObject object, String direction)
         {
             ObjectSetPositionPacket packet = new ObjectSetPositionPacket();
+			packet.direction = direction;
             packet.id = object.getId();
             packet.x = object.getX();
             packet.y = object.getY();
