@@ -1,14 +1,20 @@
 package pl.gda.pg.student.project.server.objects;
 
+import java.util.Collection;
+
+import com.badlogic.gdx.math.Vector2;
+
+import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
+import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
+import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.server.helpers.BombLegalPositionFinder;
 import pl.gda.pg.student.project.server.objects.powerUps.NumberOfBombsPowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.RangePowerUp;
-
-import java.util.Collection;
 
 public class ServerPlayer extends MovableGameObject
 {
@@ -24,15 +30,26 @@ public class ServerPlayer extends MovableGameObject
         rangeOfExplosion = 1;
     }
 
-    public boolean canPlaceBomb(){
-        if(numberOfPlacedBombs < maximumNumberOfPlacedBombs) {
-            return true;
-        }
-        return false;
+	public boolean canPlaceBomb()
+    {
+		return numberOfPlacedBombs < maximumNumberOfPlacedBombs;
     }
 
-    public void placeBomb(){
-        numberOfPlacedBombs++;
+	public void placeBomb()
+	{
+		numberOfPlacedBombs++;
+		BombLegalPositionFinder bombLegalPositioninder = new BombLegalPositionFinder();
+		Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(getX(), getY()));
+		Bomb bomb = new Bomb(linkedState, bombPosition, this);
+		long id = IdSupplier.getId();
+		bomb.setId(id);
+		((GameObjectsContainer) linkedState).add(bomb);
+		CreateObjectPacket createObjectPacket = new CreateObjectPacket();
+		createObjectPacket.xPosition = bombPosition.x;
+		createObjectPacket.yPosition = bombPosition.y;
+		createObjectPacket.id = id;
+		createObjectPacket.objectType = "Bomb";
+		((PacketsSender) linkedState).send(createObjectPacket);
     }
 
 	private void increaseRange()
