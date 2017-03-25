@@ -22,6 +22,7 @@ import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.libgdxcommon.objects.MovableGameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
+import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
@@ -229,6 +230,12 @@ public class GameServer extends ApplicationAdapter
             }
             else if(object instanceof DisconnectPacket)
                 connection.close();
+			else if (object instanceof PlayerPutBombPacket)
+			{
+				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
+				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
+				//
+			}
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
         }
 

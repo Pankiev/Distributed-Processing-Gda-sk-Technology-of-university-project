@@ -5,6 +5,7 @@ import com.esotericsoftware.kryonet.Client;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.input.InputProcessorAdapter;
 import pl.gda.pg.student.project.libgdxcommon.input.KeyHandler;
+import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
@@ -56,7 +57,6 @@ public class PlayInputHandler extends InputProcessorAdapter
             connection.sendTCP(moveLeftPacket);
 			playerObject.lookLeft();
         }
-
     }
 
     public class DKeyHandler implements KeyHandler
@@ -70,5 +70,16 @@ public class PlayInputHandler extends InputProcessorAdapter
 			playerObject.lookRight();
         }
     }
+
+	public class SpaceKeyHandler implements KeyHandler
+	{
+		@Override
+		public void handle()
+		{
+			PlayerPutBombPacket putBombPacket = new PlayerPutBombPacket();
+			putBombPacket.id = playerObject.getId();
+			connection.sendTCP(putBombPacket);
+		}
+	}
 
 }
