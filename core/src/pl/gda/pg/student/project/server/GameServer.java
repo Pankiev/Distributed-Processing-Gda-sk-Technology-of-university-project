@@ -23,6 +23,7 @@ import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.*;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
+import pl.gda.pg.student.project.server.objects.Bomb;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
 import pl.gda.pg.student.project.server.objects.ServerPlayer;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
@@ -231,6 +232,11 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				player.placeBomb(IdSupplier.getId());
+				if(player.canPlaceBomb()){
+                    Bomb bomb = new Bomb(gameState, new Vector2(player.getX(), player.getY()), player);
+                    bomb.setId(IdSupplier.getId());
+                    gameState.add(bomb);
+                }
 			}
             System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
         }
