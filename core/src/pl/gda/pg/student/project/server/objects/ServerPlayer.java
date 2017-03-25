@@ -13,7 +13,7 @@ public class ServerPlayer extends MovableGameObject
     public ServerPlayer(State linkedState)
     {
         super(GameServer.assets.get("pacman_dol.png"), linkedState);
-        maximumNumberOfPlacedBombs = 1;
+        maximumNumberOfPlacedBombs = 3;
         numberOfPlacedBombs = 0;
         rangeOfExplosion = 1;
     }

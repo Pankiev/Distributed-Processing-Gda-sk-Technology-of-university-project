@@ -170,7 +170,26 @@ public class GameServer extends ApplicationAdapter
             super(message);
         }
     }
-    
+
+    private Vector2 countBombLegalPosition(Vector2 playerPosition){
+        Vector2 bombPosition = new Vector2();
+        int playerPositionX = (int)playerPosition.x;
+        int playerPositionY = (int)playerPosition.y;
+        int fazeX = playerPositionX%27;
+        int fazeY = playerPositionY%27;
+        int noOfTileX = playerPositionX/27;
+        int noOfTileY = playerPositionY/27;
+        if(fazeX > 27/2)
+            noOfTileX++;
+        if(fazeY > 27/2)
+            noOfTileY++;
+        float bombPositionX = noOfTileX*27;
+        float bombPositionY = noOfTileY*27;
+        bombPosition.set(bombPositionX, bombPositionY);
+        System.out.println(bombPosition);
+        return bombPosition;
+    }
+
     
     private class ServerListener extends Listener
     {
@@ -237,13 +256,14 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
-                    Bomb bomb = new Bomb(gameState, new Vector2(player.getX(), player.getY()), player);
+				    Vector2 bombPosition = countBombLegalPosition(new Vector2(player.getX(), player.getY()));
+                    Bomb bomb = new Bomb(gameState, bombPosition, player);
                     long id = IdSupplier.getId();
                     bomb.setId(id);
                     gameState.add(bomb);
                     CreateObjectPacket createObjectPacket = new CreateObjectPacket();
-                    createObjectPacket.xPosition = player.getX();
-                    createObjectPacket.yPosition = player.getY();
+                    createObjectPacket.xPosition = bombPosition.x;
+                    createObjectPacket.yPosition = bombPosition.y;
                     createObjectPacket.id = id;
                     createObjectPacket.objectType = "Bomb";
                     server.sendToAllTCP(createObjectPacket);
