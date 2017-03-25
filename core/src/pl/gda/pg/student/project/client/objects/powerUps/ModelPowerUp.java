@@ -1,4 +1,4 @@
-package pl.gda.pg.student.project.client.objects.poweUps;
+package pl.gda.pg.student.project.client.objects.powerUps;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;

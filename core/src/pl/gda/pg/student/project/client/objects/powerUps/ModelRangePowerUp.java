@@ -1,4 +1,4 @@
-package pl.gda.pg.student.project.client.objects.poweUps;
+package pl.gda.pg.student.project.client.objects.powerUps;
 
 import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.client.GameClient;

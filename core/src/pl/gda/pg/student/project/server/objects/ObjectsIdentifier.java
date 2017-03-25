@@ -15,7 +15,7 @@ public class ObjectsIdentifier
     {
         identifiers.put(ServerPlayer.class, "Player");
         identifiers.put(Wall.class, "Wall");
-		identifiers.put(Box.class, "PowerUp");
+		identifiers.put(Box.class, "Box");
 		identifiers.put(Bomb.class, "Bomb");
 		identifiers.put(Explosion.class, "Explosion");
         identifiers.put(NumberOfBombsPowerUp.class, "NumberOfBombsPowerUp");
