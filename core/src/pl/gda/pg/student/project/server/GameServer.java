@@ -1,8 +1,5 @@
 package pl.gda.pg.student.project.server;
 
-import java.io.IOException;
-import java.util.Map;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,7 +9,6 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
-
 import pl.gda.pg.student.project.kryonetcommon.ConnectionSettings;
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.kryonetcommon.PacketsRegisterer;
@@ -25,19 +21,21 @@ import pl.gda.pg.student.project.packets.CreateObjectPacket;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
 import pl.gda.pg.student.project.packets.PlayerPutBombPacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveDownPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
-import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+import pl.gda.pg.student.project.packets.movement.*;
+import pl.gda.pg.student.project.server.helpers.BombLegalPositioninder;
 import pl.gda.pg.student.project.server.helpers.PlayerPositioner;
 import pl.gda.pg.student.project.server.objects.Bomb;
 import pl.gda.pg.student.project.server.objects.ObjectsIdentifier;
 import pl.gda.pg.student.project.server.objects.ServerPlayer;
 import pl.gda.pg.student.project.server.states.ServerPlayState;
 
+import java.io.IOException;
+import java.util.Map;
+
 public class GameServer extends ApplicationAdapter
 {
+    private final static int TILE_SIZE = 27;
+
     private PlayerPositioner positioner;
     private SpriteBatch batch;
     public static Assets assets;
@@ -170,26 +168,6 @@ public class GameServer extends ApplicationAdapter
             super(message);
         }
     }
-
-    private Vector2 countBombLegalPosition(Vector2 playerPosition){
-        Vector2 bombPosition = new Vector2();
-        int playerPositionX = (int)playerPosition.x;
-        int playerPositionY = (int)playerPosition.y;
-        int fazeX = playerPositionX%27;
-        int fazeY = playerPositionY%27;
-        int noOfTileX = playerPositionX/27;
-        int noOfTileY = playerPositionY/27;
-        if(fazeX > 27/2)
-            noOfTileX++;
-        if(fazeY > 27/2)
-            noOfTileY++;
-        float bombPositionX = noOfTileX*27;
-        float bombPositionY = noOfTileY*27;
-        bombPosition.set(bombPositionX, bombPositionY);
-        System.out.println(bombPosition);
-        return bombPosition;
-    }
-
     
     private class ServerListener extends Listener
     {
@@ -256,7 +234,8 @@ public class GameServer extends ApplicationAdapter
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
 				if(player.canPlaceBomb()){
-				    Vector2 bombPosition = countBombLegalPosition(new Vector2(player.getX(), player.getY()));
+                    BombLegalPositioninder bombLegalPositioninder = new BombLegalPositioninder();
+				    Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(player.getX(), player.getY()));
                     Bomb bomb = new Bomb(gameState, bombPosition, player);
                     long id = IdSupplier.getId();
                     bomb.setId(id);
