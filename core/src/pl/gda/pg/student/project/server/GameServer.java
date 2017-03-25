@@ -231,7 +231,6 @@ public class GameServer extends ApplicationAdapter
 			{
 				PlayerPutBombPacket putBombPacket = (PlayerPutBombPacket) object;
 				ServerPlayer player = (ServerPlayer) gameState.getObject(putBombPacket.id);
-				player.placeBomb(IdSupplier.getId());
 				if(player.canPlaceBomb()){
                     Bomb bomb = new Bomb(gameState, new Vector2(player.getX(), player.getY()), player);
                     long id = IdSupplier.getId();
