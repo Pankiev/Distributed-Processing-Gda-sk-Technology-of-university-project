@@ -48,7 +48,6 @@ public class ConnectionState extends State implements TextInputListener
         ClientPlayState clientPlayState = new ClientPlayState(client);
         if(client.isConnected())
             GameClient.states.set(clientPlayState);
-        GameClient.setPlayState(clientPlayState);
     }
 
     private void tryConnecting(String ip)
