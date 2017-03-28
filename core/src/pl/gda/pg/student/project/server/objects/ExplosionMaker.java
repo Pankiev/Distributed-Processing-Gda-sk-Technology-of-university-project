@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.server.helpers.ExplosionNamesFactory;
 import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 
 import java.util.Collection;
@@ -30,7 +30,7 @@ public class ExplosionMaker
 	public List<Explosion> make(int explosionRange)
 	{
 		List<Explosion> explosionChunks = new LinkedList<>();
-		Explosion centerExplosion = getExplosion(bombPosition);
+		Explosion centerExplosion = getMiddleExplosion(bombPosition);
 		explosionChunks.add(centerExplosion);
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(-TILE_SIZE, 0)));
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(TILE_SIZE, 0)));
@@ -43,26 +43,29 @@ public class ExplosionMaker
 	{
 		List<Explosion> explosionChunks = new LinkedList<>();
 		Vector2 translation = translationChunk.cpy();
+		boolean isEndOfExplosion;
 		for (int i = 0; i < explosionRange; i++)
 		{
+			isEndOfExplosion = i + 1 == explosionRange;
+
 			Vector2 explosionPosition = bombPosition.cpy().add(translation);
 			GameObject collision = isColliding(explosionPosition);
 			if (collision == null)
 			{
-				Explosion explosion = getExplosion(explosionPosition);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 			} else if(collision instanceof PowerUp){
-				Explosion explosion = getExplosion(explosionPosition);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				collision.deleteItself();
 			} else if(collision instanceof Bomb){
-				Explosion explosion = getExplosion(explosionPosition);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				Bomb bomb = ((Bomb) collision);
 				if(!bomb.isAfterExplosion())
 						bomb.explode();
 			} else if(collision instanceof ServerPlayer){
-				Explosion explosion = getExplosion(explosionPosition);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				collision.deleteItself();
 			}
@@ -76,8 +79,16 @@ public class ExplosionMaker
 		return explosionChunks;
 	}
 
-	private Explosion getExplosion(Vector2 explosionPosition) {
-		Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
+	private Explosion getMiddleExplosion(Vector2 explosionPosition) {
+		Explosion explosion = new Explosion("wyb_gdlp.png", linkedState);
+		explosion.setId(IdSupplier.getId());
+		explosion.setPosition(explosionPosition.x, explosionPosition.y);
+		return explosion;
+	}
+
+	private Explosion getExplosion(Vector2 explosionPosition, Vector2 translationChunk, boolean isEnd) {
+		String explosionTextureName = ExplosionNamesFactory.produce(translationChunk, isEnd);
+		Explosion explosion = new Explosion(explosionTextureName, linkedState);
 		explosion.setId(IdSupplier.getId());
 		explosion.setPosition(explosionPosition.x, explosionPosition.y);
 		return explosion;

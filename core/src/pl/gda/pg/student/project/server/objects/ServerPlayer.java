@@ -72,13 +72,19 @@ public class ServerPlayer extends MovableGameObject
         powerUp.deleteItself();
     }
 
+    private void handleCollision(GameObject object){
+        if(object instanceof PowerUp){
+            handlePowerUpCollision((PowerUp) object);
+        } else if(object instanceof Explosion){
+            deleteItself();
+        }
+    }
+
     @Override
     public GameObject moveLeft(Collection<GameObject> possibleCollision)
     {
         GameObject object = super.moveLeft(possibleCollision);
-        if(object instanceof PowerUp){
-            handlePowerUpCollision((PowerUp) object);
-        }
+        handleCollision(object);
         return object;
     }
 
@@ -86,9 +92,7 @@ public class ServerPlayer extends MovableGameObject
     public GameObject moveRight(Collection<GameObject> possibleCollision)
     {
         GameObject object = super.moveRight(possibleCollision);
-        if(object instanceof PowerUp){
-            handlePowerUpCollision((PowerUp) object);
-        }
+        handleCollision(object);
         return object;
     }
 
@@ -96,9 +100,7 @@ public class ServerPlayer extends MovableGameObject
     public GameObject moveDown(Collection<GameObject> possibleCollision)
     {
         GameObject object = super.moveDown(possibleCollision);
-        if(object instanceof PowerUp){
-            handlePowerUpCollision((PowerUp) object);
-        }
+        handleCollision(object);
         return object;
     }
 
@@ -106,9 +108,7 @@ public class ServerPlayer extends MovableGameObject
     public GameObject moveUp(Collection<GameObject> possibleCollision)
     {
         GameObject object = super.moveUp(possibleCollision);
-        if(object instanceof PowerUp){
-            handlePowerUpCollision((PowerUp) object);
-        }
+        handleCollision(object);
         return object;
     }
 

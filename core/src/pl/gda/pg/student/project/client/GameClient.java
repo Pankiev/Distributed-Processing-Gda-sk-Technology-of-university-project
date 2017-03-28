@@ -18,8 +18,8 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Client;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
-
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
+import pl.gda.pg.student.project.client.objects.ModelExplosion;
 import pl.gda.pg.student.project.client.objects.ModelObjectsFactory;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.client.states.ClientPlayState;
@@ -30,9 +30,13 @@ import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.StateManager;
 import pl.gda.pg.student.project.libgdxcommon.exception.GameException;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.ExplosionCreatePacket;
 import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.Direction;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class GameClient extends ApplicationAdapter
 {
@@ -102,7 +106,17 @@ public class GameClient extends ApplicationAdapter
             if (connectionModelObject instanceof ModelPlayer)
                 adjustTexture((ModelPlayer) connectionModelObject, objectSetPositionPacket.direction);
             connectionModelObject.positionUpdate(new Vector2(objectSetPositionPacket.x, objectSetPositionPacket.y));
-        } else if (object instanceof CreateObjectPacket)
+        }
+        else if (object instanceof ExplosionCreatePacket)
+        {
+                ExplosionCreatePacket createObjectPacket = (ExplosionCreatePacket) object;
+                ModelExplosion explosion = (ModelExplosion)ModelObjectsFactory.produce(createObjectPacket.objectType,
+                                new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
+                explosion.setId(createObjectPacket.id);
+                explosion.setTexture(createObjectPacket.textureName);
+                playState.add(explosion);
+        } 
+        else if (object instanceof CreateObjectPacket)
         {
             CreateObjectPacket createObjectPacket = (CreateObjectPacket) object;
             ConnectionModelObject newObject = ModelObjectsFactory.produce(createObjectPacket.objectType,

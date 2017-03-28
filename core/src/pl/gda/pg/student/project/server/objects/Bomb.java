@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.packets.CreateObjectPacket;
+import pl.gda.pg.student.project.packets.ExplosionCreatePacket;
 import pl.gda.pg.student.project.server.GameServer;
 
 import java.util.Collection;
@@ -80,7 +80,8 @@ public class Bomb extends GameObject
 
 	private void sendExplosionCreationInfo(Explosion explosion)
 	{
-		CreateObjectPacket createExplosion = new CreateObjectPacket();
+		ExplosionCreatePacket createExplosion = new ExplosionCreatePacket();
+		createExplosion.textureName = explosion.getTextureName();
 		createExplosion.objectType = explosion.getIdentifier();
 		createExplosion.id = explosion.getId();
 		createExplosion.xPosition = explosion.getX();

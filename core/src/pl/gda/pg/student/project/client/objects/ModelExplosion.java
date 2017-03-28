@@ -11,4 +11,8 @@ public class ModelExplosion extends ConnectionModelObject
 		super(GameClient.assets.get("wyb_gdlp.png"), position);
 	}
 
+	public void setTexture(String textureName){
+		super.setTexture(GameClient.assets.get(textureName));
+	};
+
 }
