@@ -4,10 +4,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.tools.ant.taskdefs.Sleep;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
 
+import pl.gda.pg.student.project.client.GameClient;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
@@ -16,7 +19,7 @@ import pl.gda.pg.student.project.packets.DisconnectPacket;
 
 public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {
-	private Map<Long, ConnectionModelObject> gameObjects = new ConcurrentHashMap<>();
+    private Map<Long, ConnectionModelObject> gameObjects = new ConcurrentHashMap<>();
     private ModelPlayer player;
     private PlayInputHandler inputHandler;
     private Client client;
@@ -24,24 +27,26 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     public ClientPlayState(Client client)
     {
         this.client = client;
+        GameClient.setPlayState(this);
         player = new ModelPlayer();
         inputHandler = new PlayInputHandler(player, client);
         Gdx.input.setInputProcessor(inputHandler);
         player.setId(client.getID());
         add(player);
     }
-    
+
     @Override
     public void render(SpriteBatch batch)
     {
-		for (Entry<Long, ConnectionModelObject> object : gameObjects.entrySet())
-			object.getValue().render(batch);
+        for (Entry<Long, ConnectionModelObject> object : gameObjects.entrySet())
+            object.getValue().render(batch);
     }
 
     @Override
     public void update()
     {
         inputHandler.process();
+        GameClient.tryHandlingUnhandledPackets();
     }
 
     @Override
@@ -57,11 +62,16 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     }
 
     @Override
-    public void remove(long id) {
-        if (id == player.getId()) {
+    public void remove(long id)
+    {
+        if (id == player.getId())
+        {
             client.sendTCP(new DisconnectPacket());
-            Gdx.app.exit();
-        } else {
+            GameClient.states.set(new AskToReconnectState(client));
+            GameClient.playStateRemoved();
+            client = null;
+        } else
+        {
             gameObjects.remove(id);
         }
     }
@@ -73,8 +83,16 @@ public class ClientPlayState extends State implements ConnectionModelObjectConta
     }
 
     @Override
-    public ConnectionModelObject getGameObjectById(long id){
+    public ConnectionModelObject getGameObjectById(long id)
+    {
         return gameObjects.get(id);
+    }
+
+    public long getClientId()
+    {
+        if(client == null)
+            return -1;
+        return client.getID();
     }
 
 }
