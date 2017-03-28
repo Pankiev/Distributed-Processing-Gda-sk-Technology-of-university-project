@@ -1,9 +1,6 @@
 package pl.gda.pg.student.project.server.objects;
 
-import java.util.Collection;
-
 import com.badlogic.gdx.math.Vector2;
-
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
@@ -15,6 +12,9 @@ import pl.gda.pg.student.project.server.helpers.BombLegalPositionFinder;
 import pl.gda.pg.student.project.server.objects.powerUps.NumberOfBombsPowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.RangePowerUp;
+import pl.gda.pg.student.project.server.objects.powerUps.SpeedUpPowerUp;
+
+import java.util.Collection;
 
 public class ServerPlayer extends MovableGameObject
 {
@@ -66,6 +66,8 @@ public class ServerPlayer extends MovableGameObject
             increaseRange();
         } else if(powerUp instanceof NumberOfBombsPowerUp){
             increseMaximumNumberOfBombs();
+        } else if(powerUp instanceof SpeedUpPowerUp){
+            setMoveSpeed(5+getMoveSpeed());
         }
         powerUp.deleteItself();
     }
