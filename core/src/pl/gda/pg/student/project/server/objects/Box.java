@@ -1,16 +1,14 @@
 package pl.gda.pg.student.project.server.objects;
 
-import java.util.Random;
-
 import com.badlogic.gdx.math.Vector2;
-
 import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
-import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.server.GameServer;
 import pl.gda.pg.student.project.server.helpers.RandomPowerUp;
+
+import java.util.Random;
 
 public class Box extends GameObject
 {
@@ -64,11 +62,4 @@ public class Box extends GameObject
 	    return random.getRandomPowerUp(linkedState, new Vector2(getX(), getY()));
 	}
 
-	private void deleteItself()
-	{
-		RemoveObjectInfo deleteItselfPacket = new RemoveObjectInfo();
-		deleteItselfPacket.id = this.getId();
-		((PacketsSender) linkedState).send(deleteItselfPacket);
-		((GameObjectsContainer) linkedState).remove(this.getId());
-	}
 }

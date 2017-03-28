@@ -1,7 +1,5 @@
 package pl.gda.pg.student.project.libgdxcommon.objects;
 
-import java.util.Collection;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -9,8 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-
+import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
+import pl.gda.pg.student.project.packets.RemoveObjectInfo;
+import pl.gda.pg.student.project.server.objects.GameObjectsContainer;
+
+import java.util.Collection;
 
 public abstract class GameObject extends Actor
 {
@@ -229,5 +231,13 @@ public abstract class GameObject extends Actor
     public void setId(long id)
     {
         this.id = id;
+    }
+
+    public void deleteItself()
+    {
+        RemoveObjectInfo deleteItselfPacket = new RemoveObjectInfo();
+        deleteItselfPacket.id = this.getId();
+        ((PacketsSender) linkedState).send(deleteItselfPacket);
+        ((GameObjectsContainer) linkedState).remove(this.getId());
     }
 }

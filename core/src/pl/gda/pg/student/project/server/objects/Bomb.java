@@ -6,7 +6,6 @@ import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.packets.CreateObjectPacket;
-import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.server.GameServer;
 
 import java.util.Collection;
@@ -19,6 +18,7 @@ public class Bomb extends GameObject
 	private boolean playerSteppedOutOfBomb = false;
 	private float timeToExplosion = 2.0f;
 	private List<Explosion> explosionChunks;
+	private boolean isAfterExplosion = false;
 
 	public Bomb(State linkedState, Vector2 position, ServerPlayer serverPlayer)
 	{
@@ -48,8 +48,9 @@ public class Bomb extends GameObject
 			explode();
 	}
 
-	private void explode()
+	public void explode()
 	{
+		isAfterExplosion = true;
 		Map<Long, GameObject> collisionObjects = ((GameObjectsContainer) linkedState).getGameObjects();
 		ExplosionMaker explosionMaker = new ExplosionMaker(
 				collisionObjects.values(), 
@@ -76,13 +77,6 @@ public class Bomb extends GameObject
 			((Box) explosionCollider).destroyedByBomb();
 	}
 
-	private void deleteItself()
-	{
-		RemoveObjectInfo deleteItselfPacket = new RemoveObjectInfo();
-		deleteItselfPacket.id = this.getId();
-		((PacketsSender) linkedState).send(deleteItselfPacket);
-		((GameObjectsContainer) linkedState).remove(this.getId());
-	}
 
 	private void sendExplosionCreationInfo(Explosion explosion)
 	{
@@ -105,4 +99,9 @@ public class Bomb extends GameObject
 	{
 		return playerSteppedOutOfBomb;
 	}
+
+	public boolean isAfterExplosion() {
+		return isAfterExplosion;
+	}
+
 }

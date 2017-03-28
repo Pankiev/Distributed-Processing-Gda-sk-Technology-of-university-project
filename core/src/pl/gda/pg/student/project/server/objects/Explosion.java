@@ -2,11 +2,8 @@ package pl.gda.pg.student.project.server.objects;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-
-import pl.gda.pg.student.project.libgdxcommon.PacketsSender;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
-import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 
 public class Explosion extends GameObject
 {
@@ -28,14 +25,6 @@ public class Explosion extends GameObject
 		livingTimeLeft -= Gdx.graphics.getDeltaTime();
 		if (livingTimeLeft <= 0.0f)
 			deleteItself();
-	}
-
-	private void deleteItself()
-	{
-		RemoveObjectInfo deleteItselfPacket = new RemoveObjectInfo();
-		deleteItselfPacket.id = this.getId();
-		((PacketsSender) linkedState).send(deleteItselfPacket);
-		((GameObjectsContainer) linkedState).remove(this.getId());
 	}
 
 	@Override

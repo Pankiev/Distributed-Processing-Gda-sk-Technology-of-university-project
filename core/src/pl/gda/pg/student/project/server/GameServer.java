@@ -181,7 +181,7 @@ public class GameServer extends ApplicationAdapter
 		public void disconnected(Connection connection)
 		{
 			userDisconnected(connection.getID());
-			System.out.println("Client connected server side, id: " + connection.getID());
+			System.out.println("Client disconnected server side, id: " + connection.getID());
 		}
 
 		@Override
@@ -235,7 +235,7 @@ public class GameServer extends ApplicationAdapter
 					player.placeBomb();
 				}
 			}
-			System.out.println("Server side: object reveived from client id: " + connection.getID() + " " + object);
+			System.out.println("Server side: object received from client id: " + connection.getID() + " " + object);
 		}
 
 		private boolean bombInPosition(Map<Long, GameObject> gameObjects, Vector2 position)

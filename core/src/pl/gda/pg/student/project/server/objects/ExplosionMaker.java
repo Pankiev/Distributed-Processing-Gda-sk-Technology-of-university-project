@@ -30,9 +30,7 @@ public class ExplosionMaker
 	public List<Explosion> make(int explosionRange)
 	{
 		List<Explosion> explosionChunks = new LinkedList<>();
-		Explosion centerExplosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
-		centerExplosion.setId(IdSupplier.getId());
-		centerExplosion.setPosition(bombPosition.x, bombPosition.y);
+		Explosion centerExplosion = getExplosion(bombPosition);
 		explosionChunks.add(centerExplosion);
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(-TILE_SIZE, 0)));
 		explosionChunks.addAll(createExplosion(explosionRange, new Vector2(TILE_SIZE, 0)));
@@ -49,14 +47,24 @@ public class ExplosionMaker
 		{
 			Vector2 explosionPosition = bombPosition.cpy().add(translation);
 			GameObject collision = isColliding(explosionPosition);
-			if (collision == null || collision instanceof PowerUp)
+			if (collision == null)
 			{
-				Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
-				explosion.setId(IdSupplier.getId());
-				explosion.setPosition(explosionPosition.x, explosionPosition.y);
+				Explosion explosion = getExplosion(explosionPosition);
 				explosionChunks.add(explosion);
-				if(collision != null)
-					((PowerUp) collision).deleteItself();
+			} else if(collision instanceof PowerUp){
+				Explosion explosion = getExplosion(explosionPosition);
+				explosionChunks.add(explosion);
+				collision.deleteItself();
+			} else if(collision instanceof Bomb){
+				Explosion explosion = getExplosion(explosionPosition);
+				explosionChunks.add(explosion);
+				Bomb bomb = ((Bomb) collision);
+				if(!bomb.isAfterExplosion())
+						bomb.explode();
+			} else if(collision instanceof ServerPlayer){
+				Explosion explosion = getExplosion(explosionPosition);
+				explosionChunks.add(explosion);
+				collision.deleteItself();
 			}
 			else
 			{
@@ -66,6 +74,13 @@ public class ExplosionMaker
 			translation.add(translationChunk);
 		}
 		return explosionChunks;
+	}
+
+	private Explosion getExplosion(Vector2 explosionPosition) {
+		Explosion explosion = new Explosion(GameServer.assets.get("wyb_gdlp.png"), linkedState);
+		explosion.setId(IdSupplier.getId());
+		explosion.setPosition(explosionPosition.x, explosionPosition.y);
+		return explosion;
 	}
 
 	public Collection<GameObject> getExplosionColliders()
