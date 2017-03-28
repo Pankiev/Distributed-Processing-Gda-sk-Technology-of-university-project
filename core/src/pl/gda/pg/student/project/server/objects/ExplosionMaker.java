@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
+import pl.gda.pg.student.project.server.helpers.ExplosionNamesFactory;
 import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 
 import java.util.Collection;
@@ -86,30 +87,7 @@ public class ExplosionMaker
 	}
 
 	private Explosion getExplosion(Vector2 explosionPosition, Vector2 translationChunk, boolean isEnd) {
-		String explosionTextureName = "";
-		if(isEnd){
-			if (translationChunk.x == -TILE_SIZE && translationChunk.y == 0) {
-				explosionTextureName = "wyb_p.png";
-			} else if (translationChunk.x == TILE_SIZE && translationChunk.y == 0) {
-				explosionTextureName = "wyb_l.png";
-			} else if (translationChunk.x == 0 && translationChunk.y == -TILE_SIZE) {
-				explosionTextureName = "wyb_g.png";
-			} else if (translationChunk.x == 0 && translationChunk.y == TILE_SIZE) {
-				explosionTextureName = "wyb_d.png";
-			}
-		}
-		else {
-			if (translationChunk.x == -TILE_SIZE && translationChunk.y == 0) {
-				explosionTextureName = "wyb_lp.png";
-			} else if (translationChunk.x == TILE_SIZE && translationChunk.y == 0) {
-				explosionTextureName = "wyb_lp.png";
-			} else if (translationChunk.x == 0 && translationChunk.y == -TILE_SIZE) {
-				explosionTextureName = "wyb_gd.png";
-			} else if (translationChunk.x == 0 && translationChunk.y == TILE_SIZE) {
-				explosionTextureName = "wyb_gd.png";
-			}
-		}
-
+		String explosionTextureName = ExplosionNamesFactory.produce(translationChunk, isEnd);
 		Explosion explosion = new Explosion(explosionTextureName, linkedState);
 		explosion.setId(IdSupplier.getId());
 		explosion.setPosition(explosionPosition.x, explosionPosition.y);
