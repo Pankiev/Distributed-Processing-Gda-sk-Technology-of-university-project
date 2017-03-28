@@ -42,26 +42,29 @@ public class ExplosionMaker
 	{
 		List<Explosion> explosionChunks = new LinkedList<>();
 		Vector2 translation = translationChunk.cpy();
+		boolean isEndOfExplosion;
 		for (int i = 0; i < explosionRange; i++)
 		{
+			isEndOfExplosion = i + 1 == explosionRange;
+
 			Vector2 explosionPosition = bombPosition.cpy().add(translation);
 			GameObject collision = isColliding(explosionPosition);
 			if (collision == null)
 			{
-				Explosion explosion = getExplosion(explosionPosition, translationChunk);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 			} else if(collision instanceof PowerUp){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				collision.deleteItself();
 			} else if(collision instanceof Bomb){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				Bomb bomb = ((Bomb) collision);
 				if(!bomb.isAfterExplosion())
 						bomb.explode();
 			} else if(collision instanceof ServerPlayer){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk);
+				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
 				collision.deleteItself();
 			}
@@ -82,17 +85,31 @@ public class ExplosionMaker
 		return explosion;
 	}
 
-	private Explosion getExplosion(Vector2 explosionPosition, Vector2 translationChunk) {
+	private Explosion getExplosion(Vector2 explosionPosition, Vector2 translationChunk, boolean isEnd) {
 		String explosionTextureName = "";
-		if(translationChunk.x == -TILE_SIZE && translationChunk.y == 0){
-			explosionTextureName = "wyb_lp.png";
-		} else if(translationChunk.x == TILE_SIZE && translationChunk.y == 0){
-			explosionTextureName = "wyb_lp.png";
-		}else if(translationChunk.x == 0 && translationChunk.y == -TILE_SIZE){
-			explosionTextureName = "wyb_gd.png";
-		}else if(translationChunk.x == 0 && translationChunk.y == TILE_SIZE){
-			explosionTextureName = "wyb_gd.png";
+		if(isEnd){
+			if (translationChunk.x == -TILE_SIZE && translationChunk.y == 0) {
+				explosionTextureName = "wyb_p.png";
+			} else if (translationChunk.x == TILE_SIZE && translationChunk.y == 0) {
+				explosionTextureName = "wyb_l.png";
+			} else if (translationChunk.x == 0 && translationChunk.y == -TILE_SIZE) {
+				explosionTextureName = "wyb_g.png";
+			} else if (translationChunk.x == 0 && translationChunk.y == TILE_SIZE) {
+				explosionTextureName = "wyb_d.png";
+			}
 		}
+		else {
+			if (translationChunk.x == -TILE_SIZE && translationChunk.y == 0) {
+				explosionTextureName = "wyb_lp.png";
+			} else if (translationChunk.x == TILE_SIZE && translationChunk.y == 0) {
+				explosionTextureName = "wyb_lp.png";
+			} else if (translationChunk.x == 0 && translationChunk.y == -TILE_SIZE) {
+				explosionTextureName = "wyb_gd.png";
+			} else if (translationChunk.x == 0 && translationChunk.y == TILE_SIZE) {
+				explosionTextureName = "wyb_gd.png";
+			}
+		}
+
 		Explosion explosion = new Explosion(explosionTextureName, linkedState);
 		explosion.setId(IdSupplier.getId());
 		explosion.setPosition(explosionPosition.x, explosionPosition.y);
