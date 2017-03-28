@@ -6,7 +6,6 @@ import pl.gda.pg.student.project.kryonetcommon.IdSupplier;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.server.helpers.ExplosionNamesFactory;
-import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -52,22 +51,8 @@ public class ExplosionMaker
 			GameObject collision = isColliding(explosionPosition);
 			if (collision == null)
 			{
-				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
+				Explosion explosion = createExplosion(explosionPosition, translationChunk, isEndOfExplosion);
 				explosionChunks.add(explosion);
-			} else if(collision instanceof PowerUp){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
-				explosionChunks.add(explosion);
-				collision.deleteItself();
-			} else if(collision instanceof Bomb){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
-				explosionChunks.add(explosion);
-				Bomb bomb = ((Bomb) collision);
-				if(!bomb.isAfterExplosion())
-						bomb.explode();
-			} else if(collision instanceof ServerPlayer){
-				Explosion explosion = getExplosion(explosionPosition, translationChunk, isEndOfExplosion);
-				explosionChunks.add(explosion);
-				collision.deleteItself();
 			}
 			else
 			{
@@ -86,7 +71,7 @@ public class ExplosionMaker
 		return explosion;
 	}
 
-	private Explosion getExplosion(Vector2 explosionPosition, Vector2 translationChunk, boolean isEnd) {
+	private Explosion createExplosion(Vector2 explosionPosition, Vector2 translationChunk, boolean isEnd) {
 		String explosionTextureName = ExplosionNamesFactory.produce(translationChunk, isEnd);
 		Explosion explosion = new Explosion(explosionTextureName, linkedState);
 		explosion.setId(IdSupplier.getId());
@@ -101,7 +86,7 @@ public class ExplosionMaker
 
 	private GameObject isColliding(Vector2 point)
 	{
-		Rectangle rectangle = new Rectangle(point.x, point.y, 2, 2);
+		Rectangle rectangle = new Rectangle(point.x, point.y, TILE_SIZE, TILE_SIZE);
 		for (GameObject collisionObject : collisionObjects)
 			if (collisionObject.isColliding(rectangle))
 				return collisionObject;

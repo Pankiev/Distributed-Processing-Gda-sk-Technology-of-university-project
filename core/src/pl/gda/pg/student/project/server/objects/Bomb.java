@@ -7,6 +7,7 @@ import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.libgdxcommon.objects.GameObject;
 import pl.gda.pg.student.project.packets.ExplosionCreatePacket;
 import pl.gda.pg.student.project.server.GameServer;
+import pl.gda.pg.student.project.server.objects.powerUps.PowerUp;
 
 import java.util.Collection;
 import java.util.List;
@@ -71,10 +72,18 @@ public class Bomb extends GameObject
 		player.bombExploded();
 	}
 
-	private void handle(GameObject explosionCollider)
-	{
+	private void handle(GameObject explosionCollider) {
 		if (explosionCollider instanceof Box)
 			((Box) explosionCollider).destroyedByBomb();
+		else if (explosionCollider instanceof PowerUp)
+			explosionCollider.deleteItself();
+		else if (explosionCollider instanceof Bomb) {
+			Bomb bomb = ((Bomb) explosionCollider);
+			if (!bomb.isAfterExplosion())
+				bomb.explode();
+		} else if (explosionCollider instanceof ServerPlayer) {
+			explosionCollider.deleteItself();
+		}
 	}
 
 

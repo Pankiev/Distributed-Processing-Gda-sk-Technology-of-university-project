@@ -151,7 +151,7 @@ public class GameClient extends ApplicationAdapter
 			}
 			handlePacket(object);
 			System.out.println(
-					"Client side: object reveived from server, client id: " + connection.getID() + " " + object);
+					"Client side: object received from server, client id: " + connection.getID() + " " + object);
 		}
 
 	}
