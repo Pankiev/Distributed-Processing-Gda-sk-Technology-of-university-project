@@ -35,7 +35,7 @@ public class ServerPlayer extends MovableGameObject
 
     public boolean canPlaceBomb()
     {
-        if(placedBombs.size() < maximumNumberOfPlacedBombs)
+        if(placedBombs.size() > maximumNumberOfPlacedBombs)
             return false;
         BombLegalPositionFinder bombLegalPositioninder = new BombLegalPositionFinder();
         Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(getX(), getY()));
