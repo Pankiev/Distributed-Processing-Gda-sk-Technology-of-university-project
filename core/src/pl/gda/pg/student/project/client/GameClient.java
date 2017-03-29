@@ -4,10 +4,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.TreeMap;
-import java.util.concurrent.ConcurrentHashMap;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -35,8 +31,6 @@ import pl.gda.pg.student.project.packets.RemoveObjectInfo;
 import pl.gda.pg.student.project.packets.movement.Direction;
 import pl.gda.pg.student.project.packets.movement.ObjectSetPositionPacket;
 
-import java.util.LinkedList;
-import java.util.List;
 
 public class GameClient extends ApplicationAdapter
 {

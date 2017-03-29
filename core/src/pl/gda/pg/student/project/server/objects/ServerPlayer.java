@@ -142,10 +142,6 @@ public class ServerPlayer extends MovableGameObject
         placedBombs.remove(explodedBomb.getId());
     }
 
-    private boolean areEqual(Bomb explodedBomb, Bomb bomb)
-    {
-        return (int)bomb.getX() == (int)explodedBomb.getY() && (int)bomb.getY() == (int)explodedBomb.getY();
-    }
 
     @Override
     public void update()

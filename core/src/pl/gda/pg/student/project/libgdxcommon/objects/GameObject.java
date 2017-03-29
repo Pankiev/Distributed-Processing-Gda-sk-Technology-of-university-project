@@ -36,27 +36,27 @@ public abstract class GameObject extends Actor
 
     public abstract String getIdentifier();
 
-	protected boolean isCollideable()
-	{
-		return true;
-	}
+    protected boolean isCollideable()
+    {
+        return true;
+    }
 
-	public boolean isColliding(GameObject gameObject)
+    public boolean isColliding(GameObject gameObject)
     {
         return isColliding(gameObject.rectangle);
     }
 
-	public boolean isColliding(Rectangle rectangle)
+    public boolean isColliding(Rectangle rectangle)
     {
-		Rectangle modifiedCopy = new Rectangle(rectangle);
-		modifiedCopy.set(modifiedCopy.x + 1, modifiedCopy.y + 1, modifiedCopy.width - 2, modifiedCopy.height - 2);
-		return this.rectangle.overlaps(modifiedCopy);
+        Rectangle modifiedCopy = new Rectangle(rectangle);
+        modifiedCopy.set(modifiedCopy.x + 2, modifiedCopy.y + 2, modifiedCopy.width - 4, modifiedCopy.height - 4);
+        return this.rectangle.overlaps(modifiedCopy);
     }
 
     protected GameObject checkForCollision(Collection<GameObject> possibleCollision)
     {
         for (GameObject gameObject : possibleCollision)
-			if (gameObject.isCollideable() && isColliding(gameObject) && gameObject != this)
+            if (gameObject.isCollideable() && isColliding(gameObject) && gameObject != this)
                 return gameObject;
         return null;
     }
