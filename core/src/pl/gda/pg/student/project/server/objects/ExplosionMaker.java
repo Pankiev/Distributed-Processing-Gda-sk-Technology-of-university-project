@@ -31,7 +31,8 @@ public class ExplosionMaker
     {
         List<Explosion> explosionChunks = new LinkedList<>();
         Explosion centerExplosion = getMiddleExplosion(bombPosition);
-        centerExplosionCollision(explosionChunks, centerExplosion);
+        centerExplosionCollision(centerExplosion);
+        explosionChunks.add(centerExplosion);
         explosionChunks.addAll(createExplosion(explosionRange, new Vector2(-TILE_SIZE, 0)));
         explosionChunks.addAll(createExplosion(explosionRange, new Vector2(TILE_SIZE, 0)));
         explosionChunks.addAll(createExplosion(explosionRange, new Vector2(0, -TILE_SIZE)));
@@ -39,14 +40,12 @@ public class ExplosionMaker
         return explosionChunks;
     }
 
-    private void centerExplosionCollision(List<Explosion> explosionChunks, Explosion centerExplosion)
+    private void centerExplosionCollision(Explosion centerExplosion)
     {
         Vector2 explosionPosition = new Vector2(centerExplosion.getX(), centerExplosion.getY());
         GameObject collision = isColliding(explosionPosition);
-        if(collision == null)
-            explosionChunks.add(centerExplosion);
-        else
-            explosionColliders.add(centerExplosion);
+        if(collision != null)
+            explosionColliders.add(collision);
     }
 
     private List<Explosion> createExplosion(int explosionRange, Vector2 translationChunk)
@@ -65,7 +64,8 @@ public class ExplosionMaker
                 Explosion explosion = createExplosion(explosionPosition, translationChunk, isEndOfExplosion);
                 explosionChunks.add(explosion);
             }
-            else
+            
+            if(!shouldContinueExplosion(collision))
             {
                 explosionColliders.add(collision);
                 return explosionChunks;
@@ -75,9 +75,14 @@ public class ExplosionMaker
         return explosionChunks;
     }
 
+    private boolean shouldContinueExplosion(GameObject collision)
+    {
+        return !(collision instanceof Wall || collision instanceof Box);
+    }
+
     private boolean shouldCreateExplosion(GameObject collision)
     {
-        return collision == null && !(collision instanceof Wall || collision instanceof Box);
+        return collision == null;
     }
 
     private Explosion getMiddleExplosion(Vector2 explosionPosition)
