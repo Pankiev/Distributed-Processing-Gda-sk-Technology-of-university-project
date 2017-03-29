@@ -1,21 +1,18 @@
 package pl.gda.pg.student.project.client.states;
 
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.apache.tools.ant.taskdefs.Sleep;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.esotericsoftware.kryonet.Client;
-
 import pl.gda.pg.student.project.client.GameClient;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObject;
 import pl.gda.pg.student.project.client.objects.ConnectionModelObjectContainer;
 import pl.gda.pg.student.project.client.objects.ModelPlayer;
 import pl.gda.pg.student.project.libgdxcommon.State;
 import pl.gda.pg.student.project.packets.DisconnectPacket;
+
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientPlayState extends State implements ConnectionModelObjectContainer
 {

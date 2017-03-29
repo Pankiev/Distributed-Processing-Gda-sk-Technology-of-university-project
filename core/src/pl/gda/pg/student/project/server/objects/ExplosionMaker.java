@@ -43,10 +43,10 @@ public class ExplosionMaker
     {
         Vector2 explosionPosition = new Vector2(centerExplosion.getX(), centerExplosion.getY());
         GameObject collision = isColliding(explosionPosition);
-        if(collision == null)
-            explosionChunks.add(centerExplosion);
-        else
-            explosionColliders.add(centerExplosion);
+        if(collision != null)
+            explosionColliders.add(collision);
+
+		explosionChunks.add(centerExplosion);
     }
 
     private List<Explosion> createExplosion(int explosionRange, Vector2 translationChunk)
@@ -65,9 +65,11 @@ public class ExplosionMaker
                 Explosion explosion = createExplosion(explosionPosition, translationChunk, isEndOfExplosion);
                 explosionChunks.add(explosion);
             }
-            else
+            if(shouldAddToColliders(collision))
             {
                 explosionColliders.add(collision);
+            }
+            if(shouldEndExplosion(collision)){
                 return explosionChunks;
             }
             translation.add(translationChunk);
@@ -75,9 +77,17 @@ public class ExplosionMaker
         return explosionChunks;
     }
 
+    private boolean shouldEndExplosion(GameObject collision) {
+        return collision instanceof Wall || collision instanceof Box;
+    }
+
+    private boolean shouldAddToColliders(GameObject collision) {
+        return collision != null;
+    }
+
     private boolean shouldCreateExplosion(GameObject collision)
     {
-        return collision == null && !(collision instanceof Wall || collision instanceof Box);
+        return collision == null || collision instanceof PowerUp || collision instanceof ServerPlayer || collision instanceof Bomb;
     }
 
     private Explosion getMiddleExplosion(Vector2 explosionPosition)
