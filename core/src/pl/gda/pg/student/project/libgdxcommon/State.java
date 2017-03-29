@@ -1,10 +1,7 @@
 package pl.gda.pg.student.project.libgdxcommon;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import pl.gda.pg.student.project.libgdxcommon.input.InputProcessorAdapter;
 
 public abstract class State
 {

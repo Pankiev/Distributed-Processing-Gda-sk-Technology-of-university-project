@@ -16,9 +16,6 @@ import pl.gda.pg.student.project.server.objects.powerUps.RangePowerUp;
 import pl.gda.pg.student.project.server.objects.powerUps.SpeedUpPowerUp;
 
 import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -145,10 +142,6 @@ public class ServerPlayer extends MovableGameObject
         placedBombs.remove(explodedBomb.getId());
     }
 
-    private boolean areEqual(Bomb explodedBomb, Bomb bomb)
-    {
-        return (int)bomb.getX() == (int)explodedBomb.getY() && (int)bomb.getY() == (int)explodedBomb.getY();
-    }
 
     @Override
     public void update()

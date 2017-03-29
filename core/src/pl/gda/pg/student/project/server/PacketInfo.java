@@ -1,6 +1,4 @@
-package pl.gda.pg.student.project;
-
-import java.util.Map;
+package pl.gda.pg.student.project.server;
 
 final class PacketInfo
 {

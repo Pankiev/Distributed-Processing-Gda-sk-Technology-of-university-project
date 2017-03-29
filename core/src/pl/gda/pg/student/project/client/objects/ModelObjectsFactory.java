@@ -11,31 +11,31 @@ public class ModelObjectsFactory
 {
     public static ConnectionModelObject produce(String identifier, Vector2 position)
     {
-        if(identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelPlayer.class)))
+        if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelPlayer.class)))
             return new ModelPlayer(position);
-        else if(identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelWall.class)))
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelWall.class)))
             return new ModelWall(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBox.class)))
-			return new ModelBox(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBomb.class)))
-			return new ModelBomb(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelExplosion.class)))
-			return new ModelExplosion(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelRangePowerUp.class)))
-			return new ModelRangePowerUp(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelNumberOfBombsPowerUp.class)))
-			return new ModelNumberOfBombsPowerUp(position);
-		else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelSpeedUpPowerUp.class)))
-			return new ModelSpeedUpPowerUp(position);
-        
-		throw new ObjectIdentifierNotFoundException(identifier);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBox.class)))
+            return new ModelBox(position);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelBomb.class)))
+            return new ModelBomb(position);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelExplosion.class)))
+            return new ModelExplosion(position);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelRangePowerUp.class)))
+            return new ModelRangePowerUp(position);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelNumberOfBombsPowerUp.class)))
+            return new ModelNumberOfBombsPowerUp(position);
+        else if (identifier.equals(ClientObjectsIdentifier.getObjectIdentifier(ModelSpeedUpPowerUp.class)))
+            return new ModelSpeedUpPowerUp(position);
+
+        throw new ObjectIdentifierNotFoundException(identifier);
     }
-    
+
     private static class ObjectIdentifierNotFoundException extends GameException
-    {  
-		public ObjectIdentifierNotFoundException(String identifier)
-		{
-			super("Identifier: " + identifier);
-		}
+    {
+        public ObjectIdentifierNotFoundException(String identifier)
+        {
+            super("Identifier: " + identifier);
+        }
     }
 }

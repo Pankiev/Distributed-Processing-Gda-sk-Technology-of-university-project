@@ -1,7 +1,5 @@
 package pl.gda.pg.student.project.client.states;
 
-import java.io.IOException;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;

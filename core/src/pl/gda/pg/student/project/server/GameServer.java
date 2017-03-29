@@ -33,8 +33,6 @@ import java.util.Map;
 
 public class GameServer extends ApplicationAdapter
 {
-    private final static int TILE_SIZE = 27;
-
     private PlayerPositioner positioner;
     private SpriteBatch batch;
     public static Assets assets;
