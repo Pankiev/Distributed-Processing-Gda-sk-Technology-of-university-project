@@ -92,7 +92,7 @@ public class GameClient extends ApplicationAdapter
 
     private static void handlePacket(Object object, long id)
     {
-        if(playState == null)
+        if (playState == null)
             throw new PacketCannotBeHandledYetException();
         if (playState.getClientId() != id)
             throw new PacketCannotBeHandledYetException();
@@ -106,17 +106,15 @@ public class GameClient extends ApplicationAdapter
             if (connectionModelObject instanceof ModelPlayer)
                 adjustTexture((ModelPlayer) connectionModelObject, objectSetPositionPacket.direction);
             connectionModelObject.positionUpdate(new Vector2(objectSetPositionPacket.x, objectSetPositionPacket.y));
-        }
-        else if (object instanceof ExplosionCreatePacket)
+        } else if (object instanceof ExplosionCreatePacket)
         {
-                ExplosionCreatePacket createObjectPacket = (ExplosionCreatePacket) object;
-                ModelExplosion explosion = (ModelExplosion)ModelObjectsFactory.produce(createObjectPacket.objectType,
-                                new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
-                explosion.setId(createObjectPacket.id);
-                explosion.setTexture(createObjectPacket.textureName);
-                playState.add(explosion);
-        } 
-        else if (object instanceof CreateObjectPacket)
+            ExplosionCreatePacket createObjectPacket = (ExplosionCreatePacket) object;
+            ModelExplosion explosion = (ModelExplosion) ModelObjectsFactory.produce(createObjectPacket.objectType,
+                    new Vector2(createObjectPacket.xPosition, createObjectPacket.yPosition));
+            explosion.setId(createObjectPacket.id);
+            explosion.setTexture(createObjectPacket.textureName);
+            playState.add(explosion);
+        } else if (object instanceof CreateObjectPacket)
         {
             CreateObjectPacket createObjectPacket = (CreateObjectPacket) object;
             ConnectionModelObject newObject = ModelObjectsFactory.produce(createObjectPacket.objectType,
@@ -167,12 +165,11 @@ public class GameClient extends ApplicationAdapter
             try
             {
                 handlePacket(object, connection.getID());
-            }
-            catch(PacketCannotBeHandledYetException e)
+            } catch (PacketCannotBeHandledYetException e)
             {
-                synchronized(unhandledPackets)
+                synchronized (unhandledPackets)
                 {
-                    unhandledPackets.add(new PacketInfo((long)connection.getID(), object));
+                    unhandledPackets.add(new PacketInfo((long) connection.getID(), object));
                 }
             }
             System.out.println(
@@ -189,17 +186,18 @@ public class GameClient extends ApplicationAdapter
 
     public static void tryHandlingUnhandledPackets()
     {
-        synchronized(unhandledPackets)
+        synchronized (unhandledPackets)
         {
             Iterator<PacketInfo> iterator = unhandledPackets.iterator();
-            
-            while(iterator.hasNext())
+
+            while (iterator.hasNext())
             {
                 PacketInfo packetInfo = iterator.next();
                 try
                 {
                     handlePacket(packetInfo.getPacket(), packetInfo.getId());
-                    iterator.remove();;
+                    iterator.remove();
+                    ;
                 } catch (PacketCannotBeHandledYetException e)
                 {
                 }

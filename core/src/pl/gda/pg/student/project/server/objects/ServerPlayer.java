@@ -19,12 +19,14 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ServerPlayer extends MovableGameObject
 {
     private int maximumNumberOfPlacedBombs;
     private int rangeOfExplosion;
-    private List<Bomb> placedBombs = new LinkedList<>();
+    private Map<Long, Bomb> placedBombs = new TreeMap<>();
 
     public ServerPlayer(State linkedState)
     {
@@ -35,12 +37,14 @@ public class ServerPlayer extends MovableGameObject
 
     public boolean canPlaceBomb()
     {
-        if(placedBombs.size() < maximumNumberOfPlacedBombs)
+
+        System.out.println(placedBombs.size());
+        if(placedBombs.size() >= maximumNumberOfPlacedBombs)
             return false;
         BombLegalPositionFinder bombLegalPositioninder = new BombLegalPositionFinder();
         Vector2 bombPosition = bombLegalPositioninder.countBombLegalPosition(new Vector2(getX(), getY()));
-        for(Bomb bomb : placedBombs)
-            if(bomb.isColliding(new Rectangle(bombPosition.x, bombPosition.y, 27, 27)))
+        for(Bomb bomb : placedBombs.values())
+            if(bomb.isColliding(new Rectangle(bombPosition.x-1, bombPosition.y-1, 3, 3)))
                 return false;
                 
         return true;
@@ -53,7 +57,7 @@ public class ServerPlayer extends MovableGameObject
         Bomb bomb = new Bomb(linkedState, bombPosition, this);
         long id = IdSupplier.getId();
         bomb.setId(id);
-        placedBombs.add(bomb);
+        placedBombs.put(bomb.getId(), bomb);
         ((GameObjectsContainer) linkedState).add(bomb);
         CreateObjectPacket createObjectPacket = new CreateObjectPacket();
         createObjectPacket.xPosition = bombPosition.x;
@@ -138,21 +142,12 @@ public class ServerPlayer extends MovableGameObject
 
     public void bombExploded(Bomb explodedBomb)
     {
-        Iterator<Bomb> it = placedBombs.iterator();
-        while(it.hasNext())
-        {
-            Bomb bomb = it.next();
-            if(areEqual(explodedBomb, bomb))
-            {
-                it.remove();
-                return;
-            }
-        }
+        placedBombs.remove(explodedBomb.getId());
     }
 
     private boolean areEqual(Bomb explodedBomb, Bomb bomb)
     {
-        return bomb.getX() == explodedBomb.getY() && bomb.getY() == explodedBomb.getY();
+        return (int)bomb.getX() == (int)explodedBomb.getY() && (int)bomb.getY() == (int)explodedBomb.getY();
     }
 
     @Override

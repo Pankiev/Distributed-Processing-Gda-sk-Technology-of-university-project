@@ -11,7 +11,6 @@ import pl.gda.pg.student.project.packets.movement.ObjectMoveLeftPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveRightPacket;
 import pl.gda.pg.student.project.packets.movement.ObjectMoveUpPacket;
 
-
 public class PlayInputHandler extends InputProcessorAdapter
 {
     private ModelPlayer playerObject;
@@ -31,7 +30,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveUpPacket moveUpPacket = new ObjectMoveUpPacket();
             moveUpPacket.id = playerObject.getId();
             connection.sendTCP(moveUpPacket);
-			playerObject.lookUp();
+            playerObject.lookUp();
         }
     }
 
@@ -43,7 +42,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveDownPacket moveDownPacket = new ObjectMoveDownPacket();
             moveDownPacket.id = playerObject.getId();
             connection.sendTCP(moveDownPacket);
-			playerObject.lookDown();
+            playerObject.lookDown();
         }
     }
 
@@ -55,7 +54,7 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveLeftPacket moveLeftPacket = new ObjectMoveLeftPacket();
             moveLeftPacket.id = playerObject.getId();
             connection.sendTCP(moveLeftPacket);
-			playerObject.lookLeft();
+            playerObject.lookLeft();
         }
     }
 
@@ -67,19 +66,19 @@ public class PlayInputHandler extends InputProcessorAdapter
             ObjectMoveRightPacket moveRightPacket = new ObjectMoveRightPacket();
             moveRightPacket.id = playerObject.getId();
             connection.sendTCP(moveRightPacket);
-			playerObject.lookRight();
+            playerObject.lookRight();
         }
     }
 
-	public class SpaceKeyHandler implements KeyHandler
-	{
-		@Override
-		public void handle()
-		{
-			PlayerPutBombPacket putBombPacket = new PlayerPutBombPacket();
-			putBombPacket.id = playerObject.getId();
-			connection.sendTCP(putBombPacket);
-		}
-	}
+    public class SpaceKeyHandler implements KeyHandler
+    {
+        @Override
+        public void handle()
+        {
+            PlayerPutBombPacket putBombPacket = new PlayerPutBombPacket();
+            putBombPacket.id = playerObject.getId();
+            connection.sendTCP(putBombPacket);
+        }
+    }
 
 }
