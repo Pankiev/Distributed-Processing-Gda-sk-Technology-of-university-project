@@ -17,7 +17,7 @@ public class Bomb extends GameObject
 {
 	private ServerPlayer player;
 	private boolean playerSteppedOutOfBomb = false;
-	private float timeToExplosion = 10.0f;
+	private float timeToExplosion = 2.0f;
 	private List<Explosion> explosionChunks;
 	private boolean isAfterExplosion = false;
 
